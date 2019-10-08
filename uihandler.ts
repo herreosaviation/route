@@ -94,21 +94,34 @@ export function initilizeUI() {
 
     inputMail.addEventListener('click', () => {
         var mailBody = getText(Texts.mailHeader);
-
+        var nl = "\n";
+        mailBody += nl;
         var route = session.getCurrentRoute();
+
         route.forEach((x, index) => {
             if (index == 0) {
-                mailBody += "\n" + getText(Texts.mailStart) + ` 
-                ` + x.getName() + "\n" + x.getLatLng();
+                mailBody += nl;
+                mailBody += getText(Texts.mailStart);
+                mailBody += nl;
+                mailBody += x.getName();
+                mailBody += nl;
+                mailBody += x.getLatLng();
             }
             else if (index < route.length - 1) {
-                mailBody += "\n" + getText(Texts.mailStop, index) + "\n";
-                mailBody += x.getName() + "\n" + x.getLatLng();
+                mailBody += nl;
+                mailBody += getText(Texts.mailStop, index);
+                mailBody += nl;
+                mailBody += x.getName();
+                mailBody += nl;
+                mailBody += x.getLatLng();
             }
             else {
-                mailBody += `
-                Ziel: 
-            ` + x.getName() + "\n" + x.getLatLng();
+                mailBody += nl;
+                mailBody += getText(Texts.mailDestination);
+                mailBody += nl;
+                mailBody += x.getName();
+                mailBody += nl;
+                mailBody += x.getLatLng();
             }
         });
 
@@ -193,7 +206,6 @@ export function initilizeUI() {
 function clearStop(group: StopGroup) {
     var index = wrapperStops.indexOf(group);
     if (index == 0) {
-        session.clearStops(0);
         session.clearStops(0);
     }
     else {

@@ -68,20 +68,33 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
         cancelSearchButton.addEventListener('click', () => { removeRouteSearch(false, null); });
         inputMail.addEventListener('click', () => {
             var mailBody = texts_1.getText(texts_1.Texts.mailHeader);
+            var nl = "\n";
+            mailBody += nl;
             var route = session.getCurrentRoute();
             route.forEach((x, index) => {
                 if (index == 0) {
-                    mailBody += "\n" + texts_1.getText(texts_1.Texts.mailStart) + ` 
-                ` + x.getName() + "\n" + x.getLatLng();
+                    mailBody += nl;
+                    mailBody += texts_1.getText(texts_1.Texts.mailStart);
+                    mailBody += nl;
+                    mailBody += x.getName();
+                    mailBody += nl;
+                    mailBody += x.getLatLng();
                 }
                 else if (index < route.length - 1) {
-                    mailBody += "\n" + texts_1.getText(texts_1.Texts.mailStop, index) + "\n";
-                    mailBody += x.getName() + "\n" + x.getLatLng();
+                    mailBody += nl;
+                    mailBody += texts_1.getText(texts_1.Texts.mailStop, index);
+                    mailBody += nl;
+                    mailBody += x.getName();
+                    mailBody += nl;
+                    mailBody += x.getLatLng();
                 }
                 else {
-                    mailBody += `
-                Ziel: 
-            ` + x.getName() + "\n" + x.getLatLng();
+                    mailBody += nl;
+                    mailBody += texts_1.getText(texts_1.Texts.mailDestination);
+                    mailBody += nl;
+                    mailBody += x.getName();
+                    mailBody += nl;
+                    mailBody += x.getLatLng();
                 }
             });
             var mailSubject = texts_1.getText(texts_1.Texts.mailSubject);
@@ -150,7 +163,6 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
     function clearStop(group) {
         var index = wrapperStops.indexOf(group);
         if (index == 0) {
-            session.clearStops(0);
             session.clearStops(0);
         }
         else {

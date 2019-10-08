@@ -189,10 +189,10 @@ export function addMapsScript(completion: () => void) {
     if (!document.querySelectorAll(`[src="${url}"]`).length) {
         document.body.appendChild(Object.assign(
             document.createElement('script'), {
-            type: 'text/javascript',
-            src: url,
-            onload: () => { initMap(); completion(); }
-        }));
+                type: 'text/javascript',
+                src: url,
+                onload: () => { initMap(); completion(); }
+            }));
     } else {
         this.doMapInitLogic();
     }

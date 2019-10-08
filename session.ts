@@ -91,12 +91,14 @@ export function setCurrentRouteObject() {
     }
     activeRouteSelector.setCurrentSelectedSearchValue(null, null);
 
+
     mapHandler.drawMarkers(getCurrentRoute().map(x => {
         var mk = new google.maps.Marker({
             position: x.getLatLng(),
             clickable: true,
             title: x.getName()
         });
+        x.marker = mk;
         var obj: mapHandler.MarkerWrapper = {
             airport: x.airportResult,
             marker: mk
@@ -118,6 +120,10 @@ export function removeStop(index: number) {
 }
 
 export function clearStops(index: number) {
+    var element = currentStops[index];
+    if (element != null && element.marker != null) {
+        element.marker.setMap(null);
+    }
     currentStops[index] = null;
 }
 

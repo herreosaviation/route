@@ -81,6 +81,7 @@ define(["require", "exports", "./mapHandler"], function (require, exports, mapHa
                 clickable: true,
                 title: x.getName()
             });
+            x.marker = mk;
             var obj = {
                 airport: x.airportResult,
                 marker: mk
@@ -102,6 +103,10 @@ define(["require", "exports", "./mapHandler"], function (require, exports, mapHa
     }
     exports.removeStop = removeStop;
     function clearStops(index) {
+        var element = exports.currentStops[index];
+        if (element != null && element.marker != null) {
+            element.marker.setMap(null);
+        }
         exports.currentStops[index] = null;
     }
     exports.clearStops = clearStops;
