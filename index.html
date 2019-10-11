@@ -30,7 +30,7 @@
                 </div>
                 <div id="selectionWrapper" class="noprint">
                     <div id="wrapperStart">
-                        <h2 id="headerStart">START:</h2>
+                        <h3 id="headerStart">START:</h3>
                         <div id="selectedStart" class="btn">Kein Startpunkt ausgewählt</div>
                         <button class="selectButton" id="buttonSelectStart">Start auswählen</button>
                         <div id="routeSearchBackgroundDiv">
@@ -59,17 +59,19 @@
                         </div>
                     </div>
                     <div id="wrapperStop">
-                        <h2 id="headerStop" class="clearFloat">ZWISCHENSTOPP:</h2>
+                        <h3 id="headerStop" class="clearFloat">ZWISCHENSTOPP:</h3>
                         <div id="selectedStop" class="btn">Kein Zwischenstopp ausgewählt</div>
                         <button class="selectButton" id="buttonSelectStop">Zwischenstopp
                             auswählen</button>
                         <button class="selectButton" disabled="true" id="clearStop">entfernen</button>
                     </div>
-                    <button id="buttonAttachStop" class="selectButton" style="width: 80%; margin: 5px;">Weiteren
-                        Zwischenstopp
-                        hinzufügen</button>
+                    <div style="padding-top: 5px; padding-bottom: 5px;">
+                        <!-- <h3 style="clear: both">ZIEL:</h3> -->
+                        <div class="btn"></div>
+                        <button id="buttonAttachStop" class="selectButton">Weiteren Zwischenstopp hinzufügen</button>
+                    </div>
                     <div id="wrapperEnd">
-                        <h2 id="destinationTitle" style="clear: both">ZIEL:</h2>
+                        <h3 id="destinationTitle" style="clear: both">ZIEL:</h3>
                         <div id="selectedEnd" class="btn">Kein Ziel ausgewählt</div>
                         <button class="selectButton" id="buttonSelectEnd">Ziel auswählen</button>
                     </div>

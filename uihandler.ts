@@ -7,7 +7,7 @@ import { performRoute, tableId } from "./ResultHandler";
 import * as session from './session';
 import { plainCountries } from "./convertcsv";
 import * as bla from 'html2canvas';
-import { Language, getText, Texts, setAppLanguage } from "./texts";
+import { Language, getText, Texts, setAppLanguage, language } from "./texts";
 // import * as html2canvas from "html2canvas";
 
 class StopGroup {
@@ -48,8 +48,8 @@ var inputPrint = <HTMLInputElement>document.getElementById("inputPrint");
 var inputCall = <HTMLInputElement>document.getElementById('inputCall');
 
 export function initilizeUI() {
-
-    setLanguage(Language.de);
+    var lng = getLanguage();
+    setLanguage(lng);
 
     wrapperStops.push({
         clearButton: clearStopButton,
@@ -599,9 +599,9 @@ function createStopElement(): StopGroup {
     var div = document.createElement("div");
     div.id = id;
 
-    var h2 = document.createElement("h2");
-    h2.className = "clearFloat";
-    h2.innerHTML = getText(Texts.stopTitle, wrapperStops.length);
+    var h3 = document.createElement("h3");
+    h3.className = "clearFloat";
+    h3.innerHTML = getText(Texts.stopTitle, wrapperStops.length);
 
     var selectedStopDiv = document.createElement("div");
     selectedStopDiv.id = "selectedStop" + wrapperStops.length;
@@ -619,7 +619,7 @@ function createStopElement(): StopGroup {
     selectedStopClearButton.style.marginLeft = "3px";
     selectedStopClearButton.innerHTML = getText(Texts.removeStop);
 
-    div.appendChild(h2);
+    div.appendChild(h3);
     div.appendChild(selectedStopDiv);
     div.appendChild(selectedStopButton);
     div.appendChild(selectedStopClearButton);
@@ -711,4 +711,26 @@ function s(id: string): HTMLElement {
 
 function i(id: string): HTMLInputElement {
     return <HTMLInputElement>document.getElementById(id);
+}
+
+function getLanguage(): Language {
+    // var url = new URL(window.location.href);
+
+    var url = new URL("https://flightplanner.herreos.eu?ln=en");
+    var parsed = new URLSearchParams(url.search);
+    var found = Language.en;
+    var param: string = parsed.get("ln");
+    var num = Language[param];
+    if (num != null) {
+        switch (num) {
+            case Language.de:
+                found = Language.de;
+                break;
+            case Language.en:
+                found = Language.en;
+                break;
+        }
+    }
+
+    return found;
 }

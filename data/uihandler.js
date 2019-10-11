@@ -30,7 +30,8 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
     var inputPrint = document.getElementById("inputPrint");
     var inputCall = document.getElementById('inputCall');
     function initilizeUI() {
-        setLanguage(texts_1.Language.de);
+        var lng = getLanguage();
+        setLanguage(lng);
         wrapperStops.push({
             clearButton: clearStopButton,
             outerDiv: document.getElementById("wrapperStop"),
@@ -503,9 +504,9 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
         var id = "wrapperStop" + wrapperStops.length;
         var div = document.createElement("div");
         div.id = id;
-        var h2 = document.createElement("h2");
-        h2.className = "clearFloat";
-        h2.innerHTML = texts_1.getText(texts_1.Texts.stopTitle, wrapperStops.length);
+        var h3 = document.createElement("h3");
+        h3.className = "clearFloat";
+        h3.innerHTML = texts_1.getText(texts_1.Texts.stopTitle, wrapperStops.length);
         var selectedStopDiv = document.createElement("div");
         selectedStopDiv.id = "selectedStop" + wrapperStops.length;
         selectedStopDiv.className = "btn";
@@ -519,7 +520,7 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
         selectedStopClearButton.id = "clearStop" + wrapperStops.length;
         selectedStopClearButton.style.marginLeft = "3px";
         selectedStopClearButton.innerHTML = texts_1.getText(texts_1.Texts.removeStop);
-        div.appendChild(h2);
+        div.appendChild(h3);
         div.appendChild(selectedStopDiv);
         div.appendChild(selectedStopButton);
         div.appendChild(selectedStopClearButton);
@@ -598,6 +599,25 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
     }
     function i(id) {
         return document.getElementById(id);
+    }
+    function getLanguage() {
+        // var url = new URL(window.location.href);
+        var url = new URL("https://flightplanner.herreos.eu?ln=en");
+        var parsed = new URLSearchParams(url.search);
+        var found = texts_1.Language.en;
+        var param = parsed.get("ln");
+        var num = texts_1.Language[param];
+        if (num != null) {
+            switch (num) {
+                case texts_1.Language.de:
+                    found = texts_1.Language.de;
+                    break;
+                case texts_1.Language.en:
+                    found = texts_1.Language.en;
+                    break;
+            }
+        }
+        return found;
     }
 });
 //# sourceMappingURL=uihandler.js.map

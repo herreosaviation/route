@@ -50,6 +50,7 @@ define(["require", "exports", "./mapHandler", "./texts"], function (require, exp
         var data = [];
         var columnNames = [texts_1.getText(texts_1.Texts.tablePlace), texts_1.getText(texts_1.Texts.tableFlightroute), texts_1.getText(texts_1.Texts.tableFlightTime), texts_1.getText(texts_1.Texts.tableCarTime), texts_1.getText(texts_1.Texts.tableCarRoute), texts_1.getText(texts_1.Texts.tableTimeSaving)];
         data.push(columnNames);
+        data.push([]);
         if (steps.length >= 1) {
             data.push([steps[0].from.getName(), "-", "-", "-", "-", "-"]);
         }

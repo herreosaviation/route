@@ -75,6 +75,7 @@ function createTable(steps: SingleStep[], numberOfStops: number): HTMLTableEleme
     var data: String[][] = [];
     var columnNames = [getText(Texts.tablePlace), getText(Texts.tableFlightroute), getText(Texts.tableFlightTime), getText(Texts.tableCarTime), getText(Texts.tableCarRoute), getText(Texts.tableTimeSaving)];
     data.push(columnNames);
+    data.push([])
     if (steps.length >= 1) {
         data.push([steps[0].from.getName(), "-", "-", "-", "-", "-"])
     }
