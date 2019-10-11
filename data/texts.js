@@ -52,7 +52,7 @@ define(["require", "exports"], function (require, exports) {
         exports.language = lang;
     }
     exports.setAppLanguage = setAppLanguage;
-    function getText(type, count = null) {
+    function getText(type, index = null) {
         var isde = exports.language == Language.de;
         switch (type) {
             case Texts.selectedCopter:
@@ -64,7 +64,7 @@ define(["require", "exports"], function (require, exports) {
             case Texts.selectStart:
                 return isde ? "Start auswählen" : "";
             case Texts.stopTitle:
-                return (isde ? "ZWISCHENSTOPP " : " ") + ((count != null && count > 1) ? count : "");
+                return (isde ? "ZWISCHENSTOPP " : " ") + ((index != null && index >= 1) ? index + 1 : "");
             case Texts.selectStop:
                 return isde ? "Zwischenstopp auswählen" : "";
             case Texts.removeStop:
@@ -96,24 +96,24 @@ define(["require", "exports"], function (require, exports) {
             case Texts.tableCaValuesInfo:
                 return isde ? "Die angezeigten Werte sind Richtwerte. Schwankungen, bspw. aufgrund der aktuellen Wetterlage, können auftreten" : "";
             case Texts.tableNeededStopsInfo:
-                if (count == null || count == 0)
+                if (index == null || index == 0)
                     return "";
                 else {
                     if (isde) {
-                        if (count == 1) {
+                        if (index == 1) {
                             return "Es muss voraussichtlich ein Tankstop durchgeführt werden, für den ca. 45 Minuten eingeplant werden muss";
                         }
                         else {
-                            return "Es müssen vorraussichtlich " + count.toString() + " Tankstops durchgeführt werden, für die jeweils ca. 45 Minuten eingeplant werden müssen";
+                            return "Es müssen vorraussichtlich " + index.toString() + " Tankstops durchgeführt werden, für die jeweils ca. 45 Minuten eingeplant werden müssen";
                         }
                     }
                     else {
                         return "";
-                        if (count == 1) {
+                        if (index == 1) {
                             return "Es muss voraussichtlich ein Tankstop durchgeführt werden, für den ca. 45 Minuten eingeplant werden muss";
                         }
                         else {
-                            return "Es müssen vorraussichtlich " + count.toString() + " Tankstops durchgeführt werden, für die jeweils ca. 45 Minuten eingeplant werden müssen";
+                            return "Es müssen vorraussichtlich " + index.toString() + " Tankstops durchgeführt werden, für die jeweils ca. 45 Minuten eingeplant werden müssen";
                         }
                     }
                 }
@@ -146,7 +146,7 @@ define(["require", "exports"], function (require, exports) {
             case Texts.mailStart:
                 return isde ? "Start" : "";
             case Texts.mailStop:
-                return isde ? "Zwischenstopp " + ((count != null && count > 0 ? count : "")) : "";
+                return isde ? "Zwischenstopp " + ((index != null && index > 0 ? index : "")) : "";
             case Texts.mailDestination:
                 return isde ? "Ziel" : "";
             case Texts.hhmmend:
