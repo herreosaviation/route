@@ -714,9 +714,7 @@ function i(id: string): HTMLInputElement {
 }
 
 function getLanguage(): Language {
-    // var url = new URL(window.location.href);
-
-    var url = new URL("https://flightplanner.herreos.eu?ln=en");
+    var url = new URL(window.location.href);
     var parsed = new URLSearchParams(url.search);
     var found = Language.en;
     var param: string = parsed.get("ln");

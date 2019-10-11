@@ -601,8 +601,7 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
         return document.getElementById(id);
     }
     function getLanguage() {
-        // var url = new URL(window.location.href);
-        var url = new URL("https://flightplanner.herreos.eu?ln=en");
+        var url = new URL(window.location.href);
         var parsed = new URLSearchParams(url.search);
         var found = texts_1.Language.en;
         var param = parsed.get("ln");
