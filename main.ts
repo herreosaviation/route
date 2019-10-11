@@ -9,7 +9,7 @@ addMapsScript(() => { });
 
 
 Number.prototype.toHHMM = function () {
-    var s = 100000000;
+    var s = this * 1000;
     var ms = s % 1000;
     s = (s - ms) / 1000;
     var secs = s % 60;
