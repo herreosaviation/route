@@ -36,7 +36,8 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
             clearButton: clearStopButton,
             outerDiv: document.getElementById("wrapperStop"),
             selectedStopDiv: labelStop,
-            selectStopButton: buttonStop
+            selectStopButton: buttonStop,
+            headerElement: null
         });
         tabButton1.addEventListener("click", (e) => tabButtonClicked(e, "address"));
         tabButton2.addEventListener("click", (e) => tabButtonClicked(e, "airport"));
@@ -210,7 +211,7 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
         }
         var currentRoute = session.getCurrentRoute();
         if (currentRoute.length < 2) {
-            return;
+            // return;
         }
         else {
             var cpt = session.currentCopter != null ? session.currentCopter : copter_1.copters[0];
@@ -226,6 +227,12 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
             }, () => {
                 alert(texts_1.getText(texts_1.Texts.routeError));
             });
+        }
+        for (var i = 0; i < wrapperStops.length; i++) {
+            var header = wrapperStops[i].headerElement;
+            if (header != null) {
+                header.innerHTML = texts_1.getText(texts_1.Texts.stopTitle, i);
+            }
         }
     }
     function openRouteSelector(event, stopGroup = null) {
@@ -528,7 +535,8 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
             clearButton: selectedStopClearButton,
             outerDiv: div,
             selectedStopDiv: selectedStopDiv,
-            selectStopButton: selectedStopButton
+            selectStopButton: selectedStopButton,
+            headerElement: h3
         };
     }
     function prefillCountrySelect(airports) {

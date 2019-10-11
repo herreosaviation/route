@@ -15,6 +15,7 @@ class StopGroup {
     clearButton: HTMLButtonElement;
     selectedStopDiv: HTMLDivElement;
     selectStopButton: HTMLButtonElement;
+    headerElement: HTMLHeadingElement;
 };
 
 var background = document.getElementById('routeSelectionBackground');
@@ -55,7 +56,8 @@ export function initilizeUI() {
         clearButton: clearStopButton,
         outerDiv: <HTMLDivElement>document.getElementById("wrapperStop"),
         selectedStopDiv: labelStop,
-        selectStopButton: buttonStop
+        selectStopButton: buttonStop,
+        headerElement: null
     });
 
     tabButton1.addEventListener("click", (e: MouseEvent) => tabButtonClicked(e, "address"));
@@ -256,7 +258,7 @@ function redrawView() {
     var currentRoute = session.getCurrentRoute();
 
     if (currentRoute.length < 2) {
-        return;
+        // return;
     }
     else {
         var cpt = session.currentCopter != null ? session.currentCopter : copters[0];
@@ -273,6 +275,13 @@ function redrawView() {
         }, () => {
             alert(getText(Texts.routeError));
         });
+    }
+
+    for (var i = 0; i < wrapperStops.length; i++) {
+        var header = wrapperStops[i].headerElement;
+        if (header != null) {
+            header.innerHTML = getText(Texts.stopTitle, i);
+        }
     }
 }
 
@@ -628,7 +637,8 @@ function createStopElement(): StopGroup {
         clearButton: selectedStopClearButton,
         outerDiv: div,
         selectedStopDiv: selectedStopDiv,
-        selectStopButton: selectedStopButton
+        selectStopButton: selectedStopButton,
+        headerElement: h3
     };
 }
 
