@@ -1,4 +1,4 @@
-define(["require", "exports", "./mapHandler", "./texts"], function (require, exports, mapHandler, texts_1) {
+define(["require", "exports", "./mapHandler", "./texts", "./timespan"], function (require, exports, mapHandler, texts_1, timespan_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.tableId = "RouteResultTable";
@@ -66,10 +66,19 @@ define(["require", "exports", "./mapHandler", "./texts"], function (require, exp
         });
         var gesamt = [texts_1.getText(texts_1.Texts.tableFinal)];
         gesamt.push(steps.map(x => x.copterDistance).reduce((x, y) => x + y).toKMMM());
-        gesamt.push(steps.map(x => x.copterDuration).reduce((x, y) => x + y).toHHMM());
-        gesamt.push(steps.map(x => x.carDuration).reduce((x, y) => x + y).toHHMM());
+        var copterDuration = steps.map(x => x.copterDuration).reduce((x, y) => x + y);
+        var cDTs = timespan_1.TimeSpan.fromSeconds(copterDuration);
+        if (numberOfStops != 0) {
+            var minutes = numberOfStops * 45;
+            var ts = timespan_1.TimeSpan.fromMinutes(minutes);
+            cDTs = cDTs.add(ts);
+            copterDuration = cDTs.totalSeconds;
+        }
+        gesamt.push(copterDuration.toHHMM());
+        var carDuration = steps.map(x => x.carDuration).reduce((x, y) => x + y);
+        gesamt.push(carDuration.toHHMM());
         gesamt.push(steps.map(x => x.carDistance).reduce((x, y) => x + y).toKMMM());
-        gesamt.push(steps.map(x => x.carDuration - x.copterDuration).reduce((x, y) => x + y).toHHMM());
+        gesamt.push((carDuration - copterDuration).toHHMM());
         data.push([]);
         data.push(gesamt);
         data.push([texts_1.getText(texts_1.Texts.tableCaValuesInfo)]);
@@ -80,6 +89,7 @@ define(["require", "exports", "./mapHandler", "./texts"], function (require, exp
             data.push([texts_1.getText(texts_1.Texts.tableNeededStopsInfo, numberOfStops)]);
         }
         data.forEach(x => {
+            var index = 0;
             var row = table.insertRow();
             if (x.length == 0) {
                 row.className = "border_bottom";
@@ -92,6 +102,12 @@ define(["require", "exports", "./mapHandler", "./texts"], function (require, exp
                 if (x.length == 1) {
                     cell.colSpan = data[0].length;
                 }
+                else if (index == 1 || index == 3 || index == 5) {
+                    cell.style.borderLeft = "1pt solid white";
+                    cell.style.paddingLeft = "10px";
+                    cell.style.paddingRight = "10px";
+                }
+                index++;
             });
         });
         return table;

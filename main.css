@@ -134,6 +134,11 @@ body {
     font-weight: 600;
 }
 
+
+/* th, td.vert{ 
+    border-left:1px solid #ccc; border-right: 1px solid #ccc;
+} */
+
 tr.border_bottom td {
     border-bottom:1pt solid white;
 }
