@@ -240,7 +240,7 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
             session.activeRouteSelector.removeCurrentmarker();
         }
         var sender = event.srcElement;
-        selectCountry.value = "Alle";
+        selectCountry.value = texts_1.getText(texts_1.Texts.selectorSelectCountry);
         var sel;
         if (stopGroup == null) {
             var marker;
@@ -353,7 +353,7 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
     }
     var countrySelection = null;
     function selectCountryDidChange(event) {
-        countrySelection = selectCountry.value == "Alle" ? null : selectCountry.value;
+        countrySelection = selectCountry.value == texts_1.getText(texts_1.Texts.selectorSelectCountry) ? null : selectCountry.value;
         updateAirportDropdownByCountry(countrySelection);
     }
     function updateAirportDropdownByCountry(country) {
@@ -545,8 +545,8 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
         }
         var allOption = document.createElement('option');
         var option = document.createElement('option');
-        option.innerHTML = "Alle";
-        option.value = "Alle";
+        option.innerHTML = texts_1.getText(texts_1.Texts.selectorSelectCountry);
+        option.value = texts_1.getText(texts_1.Texts.selectorSelectCountry);
         selectCountry.options.add(option);
         convertcsv_1.plainCountries.forEach(x => {
             var opt = document.createElement('option');
