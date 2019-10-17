@@ -113,7 +113,7 @@ function createTable(steps: SingleStep[], numberOfStops: number): HTMLTableEleme
 
     data.push([getText(Texts.tableCaValuesInfo)]);
     if (numberOfStops == 1) {
-        data.push([getText(Texts.tableNeededStopsInfo, null)])
+        data.push([getText(Texts.tableNeededStopsInfo, 1)])
     }
     else if (numberOfStops > 1) {
         data.push([getText(Texts.tableNeededStopsInfo, numberOfStops)])

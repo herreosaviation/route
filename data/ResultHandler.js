@@ -83,7 +83,7 @@ define(["require", "exports", "./mapHandler", "./texts", "./timespan"], function
         data.push(gesamt);
         data.push([texts_1.getText(texts_1.Texts.tableCaValuesInfo)]);
         if (numberOfStops == 1) {
-            data.push([texts_1.getText(texts_1.Texts.tableNeededStopsInfo, null)]);
+            data.push([texts_1.getText(texts_1.Texts.tableNeededStopsInfo, 1)]);
         }
         else if (numberOfStops > 1) {
             data.push([texts_1.getText(texts_1.Texts.tableNeededStopsInfo, numberOfStops)]);
