@@ -98,7 +98,7 @@ export function getText(type: Texts, index: number = null): string {
             else {
                 if (isde) {
                     if (index == 1) {
-                        return "Es ist voraussichtlich ein Taknstop erforderlich. Für den Tankstop müssen ca. 45 Minuten eingeplant werden. Dies ist in der Reisezeit inbegriffen.";
+                        return "Es ist voraussichtlich ein Tankstop erforderlich. Für den Tankstop müssen ca. 45 Minuten eingeplant werden. Dies ist in der Reisezeit inbegriffen.";
                     }
                     else {
                         return "Es müssen vorraussichtlich " + index.toString() + " Tankstops durchgeführt werden. Für die Tankstops müssen jeweils ca. 45 Minuten eingeplant werden. Dies ist in der Reisezeit inbegriffen.";
