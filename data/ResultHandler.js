@@ -98,6 +98,8 @@ define(["require", "exports", "./mapHandler", "./texts", "./timespan"], function
             }
             x.forEach(y => {
                 var cell = row.insertCell();
+                row.style.paddingTop = "0px";
+                row.style.paddingBottom = "0px";
                 cell.innerHTML = y;
                 if (x.length == 1) {
                     cell.colSpan = data[0].length;

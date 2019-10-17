@@ -31,22 +31,23 @@ define(["require", "exports"], function (require, exports) {
         Texts[Texts["tableCaValuesInfo"] = 19] = "tableCaValuesInfo";
         Texts[Texts["tableNeededStopsInfo"] = 20] = "tableNeededStopsInfo";
         Texts[Texts["hidePlaner"] = 21] = "hidePlaner";
-        Texts[Texts["selectorTabAddress"] = 22] = "selectorTabAddress";
-        Texts[Texts["selectorTabAirport"] = 23] = "selectorTabAirport";
-        Texts[Texts["selectorTabCancel"] = 24] = "selectorTabCancel";
-        Texts[Texts["selectorSelect"] = 25] = "selectorSelect";
-        Texts[Texts["selectorFieldAddress"] = 26] = "selectorFieldAddress";
-        Texts[Texts["selectorFieldNearbyAirport"] = 27] = "selectorFieldNearbyAirport";
-        Texts[Texts["selectorFieldAirport"] = 28] = "selectorFieldAirport";
-        Texts[Texts["selectorSelectTitleCountry"] = 29] = "selectorSelectTitleCountry";
-        Texts[Texts["selectorSelectCountry"] = 30] = "selectorSelectCountry";
-        Texts[Texts["routeError"] = 31] = "routeError";
-        Texts[Texts["mailSubject"] = 32] = "mailSubject";
-        Texts[Texts["mailHeader"] = 33] = "mailHeader";
-        Texts[Texts["mailStart"] = 34] = "mailStart";
-        Texts[Texts["mailStop"] = 35] = "mailStop";
-        Texts[Texts["mailDestination"] = 36] = "mailDestination";
-        Texts[Texts["hhmmend"] = 37] = "hhmmend";
+        Texts[Texts["showPlaner"] = 22] = "showPlaner";
+        Texts[Texts["selectorTabAddress"] = 23] = "selectorTabAddress";
+        Texts[Texts["selectorTabAirport"] = 24] = "selectorTabAirport";
+        Texts[Texts["selectorTabCancel"] = 25] = "selectorTabCancel";
+        Texts[Texts["selectorSelect"] = 26] = "selectorSelect";
+        Texts[Texts["selectorFieldAddress"] = 27] = "selectorFieldAddress";
+        Texts[Texts["selectorFieldNearbyAirport"] = 28] = "selectorFieldNearbyAirport";
+        Texts[Texts["selectorFieldAirport"] = 29] = "selectorFieldAirport";
+        Texts[Texts["selectorSelectTitleCountry"] = 30] = "selectorSelectTitleCountry";
+        Texts[Texts["selectorSelectCountry"] = 31] = "selectorSelectCountry";
+        Texts[Texts["routeError"] = 32] = "routeError";
+        Texts[Texts["mailSubject"] = 33] = "mailSubject";
+        Texts[Texts["mailHeader"] = 34] = "mailHeader";
+        Texts[Texts["mailStart"] = 35] = "mailStart";
+        Texts[Texts["mailStop"] = 36] = "mailStop";
+        Texts[Texts["mailDestination"] = 37] = "mailDestination";
+        Texts[Texts["hhmmend"] = 38] = "hhmmend";
     })(Texts = exports.Texts || (exports.Texts = {}));
     function setAppLanguage(lang) {
         exports.language = lang;
@@ -120,6 +121,8 @@ define(["require", "exports"], function (require, exports) {
                 }
             case Texts.hidePlaner:
                 return isde ? "Flugplaner ausblenden" : "Hide Flightplanner";
+            case Texts.showPlaner:
+                return isSecureContext ? "Flugplaner einblenden" : "Show Flightplanner";
             case Texts.selectorTabAddress:
                 return isde ? "Aus Addresse wählen" : "Select from address";
             case Texts.selectorTabAirport:

@@ -573,7 +573,7 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
             document.getElementById("wrapper").style.height = "auto";
             document.getElementById("wrapper").style.display = "unset";
         }
-        div.innerHTML = ishidden ? "Flugplaner einblenden" : "Flugplaner ausblenden";
+        div.innerHTML = texts_1.getText(ishidden ? texts_1.Texts.showPlaner : texts_1.Texts.hidePlaner);
     });
     function insertAfter(newNode, referenceNode) {
         referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);

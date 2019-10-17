@@ -27,6 +27,7 @@ export enum Texts {
     tableCaValuesInfo,
     tableNeededStopsInfo,
     hidePlaner,
+    showPlaner,
     selectorTabAddress,
     selectorTabAirport,
     selectorTabCancel,
@@ -116,6 +117,8 @@ export function getText(type: Texts, index: number = null): string {
             }
         case Texts.hidePlaner:
             return isde ? "Flugplaner ausblenden" : "Hide Flightplanner";
+        case Texts.showPlaner:
+            return isSecureContext ? "Flugplaner einblenden" : "Show Flightplanner";
         case Texts.selectorTabAddress:
             return isde ? "Aus Addresse wählen" : "Select from address";
         case Texts.selectorTabAirport:

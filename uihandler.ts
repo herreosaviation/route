@@ -680,7 +680,7 @@ div.addEventListener("click", () => {
         document.getElementById("wrapper").style.height = "auto";
         document.getElementById("wrapper").style.display = "unset";
     }
-    div.innerHTML = ishidden ? "Flugplaner einblenden" : "Flugplaner ausblenden";
+    div.innerHTML = getText(ishidden ? Texts.showPlaner : Texts.hidePlaner);
 });
 
 function insertAfter(newNode: HTMLElement, referenceNode: HTMLElement) {
