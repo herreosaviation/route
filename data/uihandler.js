@@ -244,7 +244,7 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
             session.activeRouteSelector.removeCurrentmarker();
         }
         var sender = event.srcElement;
-        selectCountry.value = "Alle";
+        selectCountry.value = texts_1.getText(texts_1.Texts.selectorSelectCountry);
         var sel;
         if (stopGroup == null) {
             var marker;
@@ -357,7 +357,7 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
     }
     var countrySelection = null;
     function selectCountryDidChange(event) {
-        countrySelection = selectCountry.value == "Alle" ? null : selectCountry.value;
+        countrySelection = selectCountry.value == texts_1.getText(texts_1.Texts.selectorSelectCountry) ? null : selectCountry.value;
         updateAirportDropdownByCountry(countrySelection);
     }
     function updateAirportDropdownByCountry(country) {
@@ -549,8 +549,8 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
         }
         var allOption = document.createElement('option');
         var option = document.createElement('option');
-        option.innerHTML = "Alle";
-        option.value = "Alle";
+        option.innerHTML = texts_1.getText(texts_1.Texts.selectorSelectCountry);
+        option.value = texts_1.getText(texts_1.Texts.selectorSelectCountry);
         selectCountry.options.add(option);
         convertcsv_1.plainCountries.forEach(function (x) {
             var opt = document.createElement('option');
@@ -577,7 +577,7 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
             document.getElementById("wrapper").style.height = "auto";
             document.getElementById("wrapper").style.display = "unset";
         }
-        div.innerHTML = ishidden ? "Flugplaner einblenden" : "Flugplaner ausblenden";
+        div.innerHTML = texts_1.getText(ishidden ? texts_1.Texts.showPlaner : texts_1.Texts.hidePlaner);
     });
     function insertAfter(newNode, referenceNode) {
         referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);

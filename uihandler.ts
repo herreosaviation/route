@@ -291,7 +291,7 @@ function openRouteSelector(event: MouseEvent, stopGroup: StopGroup = null) {
     }
 
     var sender = event.srcElement;
-    selectCountry.value = "Alle";
+    selectCountry.value = getText(Texts.selectorSelectCountry);
     var sel: ActiveRouteSelection;
     if (stopGroup == null) {
         var marker: google.maps.Marker;
@@ -426,7 +426,7 @@ function dropDownTextChanged(event: Event) {
 
 var countrySelection: string = null;
 function selectCountryDidChange(event: Event) {
-    countrySelection = selectCountry.value == "Alle" ? null : selectCountry.value;
+    countrySelection = selectCountry.value == getText(Texts.selectorSelectCountry) ? null : selectCountry.value;
     updateAirportDropdownByCountry(countrySelection);
 }
 
@@ -649,8 +649,8 @@ function prefillCountrySelect(airports: Airport[]) {
 
     var allOption = document.createElement('option');
     var option = document.createElement('option');
-    option.innerHTML = "Alle";
-    option.value = "Alle";
+    option.innerHTML = getText(Texts.selectorSelectCountry);
+    option.value = getText(Texts.selectorSelectCountry);
     selectCountry.options.add(option);
     plainCountries.forEach(x => {
         var opt = document.createElement('option');
@@ -680,7 +680,7 @@ div.addEventListener("click", () => {
         document.getElementById("wrapper").style.height = "auto";
         document.getElementById("wrapper").style.display = "unset";
     }
-    div.innerHTML = ishidden ? "Flugplaner einblenden" : "Flugplaner ausblenden";
+    div.innerHTML = getText(ishidden ? Texts.showPlaner : Texts.hidePlaner);
 });
 
 function insertAfter(newNode: HTMLElement, referenceNode: HTMLElement) {

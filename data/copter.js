@@ -13,7 +13,7 @@ define(["require", "exports"], function (require, exports) {
     }());
     exports.Copter = Copter;
     exports.copters = [
-        new Copter("Agusta AW109SP", "AW109SP", 270, 2.5, 260)
+        new Copter("Agusta AW109SP", "AW109SP", 270, 2.5, 250)
     ];
 });
 //# sourceMappingURL=copter.js.map

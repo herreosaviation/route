@@ -2,6 +2,7 @@ import { RouteObjectWrapper } from "./session";
 import { Copter } from "./copter";
 import * as mapHandler from './mapHandler';
 import { getText, Texts } from "./texts";
+import { TimeSpan } from "./timespan";
 
 export interface RouteResult {
     table: HTMLTableElement;
@@ -93,23 +94,33 @@ function createTable(steps: SingleStep[], numberOfStops: number): HTMLTableEleme
 
     var gesamt: String[] = [getText(Texts.tableFinal)];
     gesamt.push(steps.map(x => x.copterDistance).reduce((x, y) => x + y).toKMMM());
-    gesamt.push(steps.map(x => x.copterDuration).reduce((x, y) => x + y).toHHMM());
-    gesamt.push(steps.map(x => x.carDuration).reduce((x, y) => x + y).toHHMM());
+    var copterDuration = steps.map(x => x.copterDuration).reduce((x, y) => x + y);
+    var cDTs = TimeSpan.fromSeconds(copterDuration);
+    if (numberOfStops != 0) {
+        var minutes = numberOfStops * 45;
+        var ts = TimeSpan.fromMinutes(minutes);
+        cDTs = cDTs.add(ts);
+        copterDuration = cDTs.totalSeconds;
+    }
+    gesamt.push(copterDuration.toHHMM());
+    var carDuration = steps.map(x => x.carDuration).reduce((x, y) => x + y);
+    gesamt.push(carDuration.toHHMM());
     gesamt.push(steps.map(x => x.carDistance).reduce((x, y) => x + y).toKMMM());
-    gesamt.push(steps.map(x => x.carDuration - x.copterDuration).reduce((x, y) => x + y).toHHMM());
+    gesamt.push((carDuration - copterDuration).toHHMM());
 
     data.push([]);
     data.push(gesamt);
 
     data.push([getText(Texts.tableCaValuesInfo)]);
     if (numberOfStops == 1) {
-        data.push([getText(Texts.tableNeededStopsInfo, null)])
+        data.push([getText(Texts.tableNeededStopsInfo, 1)])
     }
     else if (numberOfStops > 1) {
         data.push([getText(Texts.tableNeededStopsInfo, numberOfStops)])
     }
 
     data.forEach(x => {
+        var index = 0;
         var row = table.insertRow();
         if (x.length == 0) {
             row.className = "border_bottom";
@@ -118,10 +129,19 @@ function createTable(steps: SingleStep[], numberOfStops: number): HTMLTableEleme
         }
         x.forEach(y => {
             var cell = row.insertCell();
+            row.style.paddingTop = "0px";
+            row.style.paddingBottom = "0px";
             cell.innerHTML = <string>y;
             if (x.length == 1) {
                 cell.colSpan = data[0].length;
             }
+            else if (index == 1 || index == 3 || index == 5) {
+                cell.style.borderLeft = "1pt solid white";
+                cell.style.paddingLeft = "10px";
+                cell.style.paddingRight = "10px";
+            }
+
+            index++;
         });
     });
 

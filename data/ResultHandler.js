@@ -1,4 +1,4 @@
-define(["require", "exports", "./mapHandler", "./texts"], function (require, exports, mapHandler, texts_1) {
+define(["require", "exports", "./mapHandler", "./texts", "./timespan"], function (require, exports, mapHandler, texts_1, timespan_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.tableId = "RouteResultTable";
@@ -66,20 +66,30 @@ define(["require", "exports", "./mapHandler", "./texts"], function (require, exp
         });
         var gesamt = [texts_1.getText(texts_1.Texts.tableFinal)];
         gesamt.push(steps.map(function (x) { return x.copterDistance; }).reduce(function (x, y) { return x + y; }).toKMMM());
-        gesamt.push(steps.map(function (x) { return x.copterDuration; }).reduce(function (x, y) { return x + y; }).toHHMM());
-        gesamt.push(steps.map(function (x) { return x.carDuration; }).reduce(function (x, y) { return x + y; }).toHHMM());
+        var copterDuration = steps.map(function (x) { return x.copterDuration; }).reduce(function (x, y) { return x + y; });
+        var cDTs = timespan_1.TimeSpan.fromSeconds(copterDuration);
+        if (numberOfStops != 0) {
+            var minutes = numberOfStops * 45;
+            var ts = timespan_1.TimeSpan.fromMinutes(minutes);
+            cDTs = cDTs.add(ts);
+            copterDuration = cDTs.totalSeconds;
+        }
+        gesamt.push(copterDuration.toHHMM());
+        var carDuration = steps.map(function (x) { return x.carDuration; }).reduce(function (x, y) { return x + y; });
+        gesamt.push(carDuration.toHHMM());
         gesamt.push(steps.map(function (x) { return x.carDistance; }).reduce(function (x, y) { return x + y; }).toKMMM());
-        gesamt.push(steps.map(function (x) { return x.carDuration - x.copterDuration; }).reduce(function (x, y) { return x + y; }).toHHMM());
+        gesamt.push((carDuration - copterDuration).toHHMM());
         data.push([]);
         data.push(gesamt);
         data.push([texts_1.getText(texts_1.Texts.tableCaValuesInfo)]);
         if (numberOfStops == 1) {
-            data.push([texts_1.getText(texts_1.Texts.tableNeededStopsInfo, null)]);
+            data.push([texts_1.getText(texts_1.Texts.tableNeededStopsInfo, 1)]);
         }
         else if (numberOfStops > 1) {
             data.push([texts_1.getText(texts_1.Texts.tableNeededStopsInfo, numberOfStops)]);
         }
         data.forEach(function (x) {
+            var index = 0;
             var row = table.insertRow();
             if (x.length == 0) {
                 row.className = "border_bottom";
@@ -88,10 +98,18 @@ define(["require", "exports", "./mapHandler", "./texts"], function (require, exp
             }
             x.forEach(function (y) {
                 var cell = row.insertCell();
+                row.style.paddingTop = "0px";
+                row.style.paddingBottom = "0px";
                 cell.innerHTML = y;
                 if (x.length == 1) {
                     cell.colSpan = data[0].length;
                 }
+                else if (index == 1 || index == 3 || index == 5) {
+                    cell.style.borderLeft = "1pt solid white";
+                    cell.style.paddingLeft = "10px";
+                    cell.style.paddingRight = "10px";
+                }
+                index++;
             });
         });
         return table;

@@ -27,6 +27,7 @@ export enum Texts {
     tableCaValuesInfo,
     tableNeededStopsInfo,
     hidePlaner,
+    showPlaner,
     selectorTabAddress,
     selectorTabAirport,
     selectorTabCancel,
@@ -53,86 +54,89 @@ export function getText(type: Texts, index: number = null): string {
     var isde = language == Language.de;
     switch (type) {
         case Texts.selectedCopter:
-            return isde ? "Gewünschter Helikopter" : "";
+            return isde ? "Helikopter Typ" : "Helicopter Type";
         case Texts.startTitle:
-            return isde ? "START:" : "";
+            return isde ? "Start-Ort" : "Place of Departure";
         case Texts.noStart:
-            return isde ? "Kein Start ausgewählt" : "";
+            return isde ? "Kein Start-Ort ausgewählt" : "No place of departure selected";
         case Texts.selectStart:
-            return isde ? "Start auswählen" : "";
+            return isde ? "Start-Ort auswählen" : "Select place of departure";
         case Texts.stopTitle:
-            return (isde ? "ZWISCHENSTOPP " : " ") + ((index != null && index >= 1) ? index + 1 : "");
+            return (isde ? "Zwischenstopp " : "Intermediate Stop ") + ((index != null && index >= 1) ? index + 1 : "");
         case Texts.selectStop:
-            return isde ? "Zwischenstopp auswählen" : "";
+            return isde ? "Zwischenstopp auswählen" : "Select intermediate stop";
         case Texts.removeStop:
-            return isde ? "entfernen" : "";
+            return isde ? "Entfernen" : "Clear";
         case Texts.attachStop:
-            return isde ? "Weiteren Zwischenstopp hinzufügen" : "";
+            return isde ? "Weiteren Zwischenstopp hinzufügen" : "Add additional intermediate stop";
         case Texts.noStop:
-            return isde ? "Kein Zwischenstopp ausgewählt" : "";
+            return isde ? "Kein Zwischenstopp ausgewählt" : "No intermediate stop selected";
         case Texts.destinationTitle:
-            return isde ? "ZIEL" : "";
+            return isde ? "Ziel" : "Destination";
         case Texts.selectDestination:
-            return isde ? "Ziel auswählen" : "";
+            return isde ? "Ziel auswählen" : "Select destination";
         case Texts.noDestination:
-            return isde ? "Kein Ziel ausgewählt" : "";
+            return isde ? "Kein Ziel ausgewählt" : "No destination selected";
         case Texts.tablePlace:
-            return isde ? "Ort" : "";
+            return isde ? "Ort" : "Destination";
         case Texts.tableFlightroute:
-            return isde ? "Luftlinie" : "";
+            return isde ? "Luftlinie" : "Distance Traveled in Flight";
         case Texts.tableFlightTime:
-            return isde ? "Flugzeit" : "";
+            return isde ? "Flugzeit" : "Travel Time by Helicopter";
         case Texts.tableCarRoute:
-            return isde ? "Fahrtstrecke" : "";
+            return isde ? "Fahrtstrecke" : "Distance Traveled by Car";
         case Texts.tableCarTime:
-            return isde ? "Fahrtzeit" : "";
+            return isde ? "Fahrtzeit" : "Travel Time by Car";
         case Texts.tableTimeSaving:
-            return isde ? "Zeitersparnis" : "";
+            return isde ? "Zeitersparnis" : "Time saved";
         case Texts.tableFinal:
-            return isde ? "Gesamt" : "";
+            return isde ? "Gesamt" : "Total";
         case Texts.tableCaValuesInfo:
-            return isde ? "Die angezeigten Werte sind Richtwerte. Schwankungen, bspw. aufgrund der aktuellen Wetterlage, können auftreten" : "";
+            return isde ? "Die angegebenen Werte sind Richtwerte. Abweichungen beispielsweise aufgrund der aktuellen Wetterlage können auftreten."
+                : "The displayed values are standard values. Discrepancies may arise, for example due to current weather conditions.";
         case Texts.tableNeededStopsInfo:
             if (index == null || index == 0) return "";
             else {
                 if (isde) {
                     if (index == 1) {
-                        return "Es muss voraussichtlich ein Tankstop durchgeführt werden, für den ca. 45 Minuten eingeplant werden muss";
+                        return "Es ist voraussichtlich ein Tankstop erforderlich. Für den Tankstop müssen ca. 45 Minuten eingeplant werden. Dies ist in der Reisezeit inbegriffen.";
                     }
                     else {
-                        return "Es müssen vorraussichtlich " + index.toString() + " Tankstops durchgeführt werden, für die jeweils ca. 45 Minuten eingeplant werden müssen";
+                        return "Es müssen vorraussichtlich " + index.toString() + " Tankstops durchgeführt werden. Für die Tankstops müssen jeweils ca. 45 Minuten eingeplant werden. Dies ist in der Reisezeit inbegriffen.";
                     }
                 }
                 else {
-                    return "";
                     if (index == 1) {
-                        return "Es muss voraussichtlich ein Tankstop durchgeführt werden, für den ca. 45 Minuten eingeplant werden muss";
+                        return "An intermediate stop for refuelling is expected on this trip. The stop is calculated with 45 Minutes and has been added to your travel time.";
                     }
                     else {
-                        return "Es müssen vorraussichtlich " + index.toString() + " Tankstops durchgeführt werden, für die jeweils ca. 45 Minuten eingeplant werden müssen";
+                        return index.toString() + " intermediate stops for refuelling are expected on this trip. The stops are calculated with 45 minutes each and have been added to your traveltime";
+                        // return "Es müssen vorraussichtlich " + index.toString() + " Tankstops durchgeführt werden, für die jeweils ca. 45 Minuten eingeplant werden müssen";
                     }
                 }
             }
         case Texts.hidePlaner:
-            return isde ? "Flugplaner ausblenden" : "";
+            return isde ? "Flugplaner ausblenden" : "Hide Flightplanner";
+        case Texts.showPlaner:
+            return isde ? "Flugplaner einblenden" : "Show Flightplanner";
         case Texts.selectorTabAddress:
-            return isde ? "Aus Addresse wählen" : "";
+            return isde ? "Aus Addresse wählen" : "Select from address";
         case Texts.selectorTabAirport:
-            return isde ? "Flugplatz wählen" : "";
+            return isde ? "Flugplatz wählen" : "Select Airfield";
         case Texts.selectorTabCancel:
-            return isde ? "Abbrechen" : "";
+            return isde ? "Abbrechen" : "Cancel";
         case Texts.selectorSelect:
-            return isde ? "Auswahl übernehmen" : "";
+            return isde ? "Auswahl übernehmen" : "Apply Selection";
         case Texts.selectorFieldAddress:
-            return isde ? "Addresse, Postleitzahl oder Ort eingeben" : "";
+            return isde ? "Addresse, Postleitzahl oder Ort eingeben" : "Enter Adress, Zip-Code or Place";
         case Texts.selectorFieldNearbyAirport:
-            return isde ? "(Optional) Flugplatz in der Nähe wählen" : "";
+            return isde ? "(Optional) Flugplatz in der Nähe wählen" : "(Optional) Select nearby Airfield";
         case Texts.selectorFieldAirport:
-            return isde ? "Flugplatz auswählen" : "";
+            return isde ? "Flugplatz auswählen" : "Select Airfield";
         case Texts.selectorSelectTitleCountry:
-            return isde ? "Land auswählen" : "";
+            return isde ? "Land auswählen" : "Select Country";
         case Texts.selectorSelectCountry:
-            return isde ? "Alle" : "";
+            return isde ? "Alle" : "All";
         case Texts.routeError:
             return isde ? "Route konnte nicht berechnet werden." : "Could not calculate route.";
         case Texts.mailSubject:
