@@ -440,7 +440,7 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
     }
     function updateAddressDataList(dl, options, initial) {
         while (dl.children.length != 0) {
-            dl.children[0].remove();
+            dl.children[0] = null;
         }
         options.forEach(function (x) {
             var opt = document.createElement('option');

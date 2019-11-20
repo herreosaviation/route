@@ -518,7 +518,7 @@ function getDataListForInputElement(sender: HTMLInputElement): HTMLDataListEleme
 
 function updateAddressDataList(dl: HTMLDataListElement, options: google.maps.GeocoderResult[], initial: string) {
     while (dl.children.length != 0) {
-        dl.children[0].remove();
+        dl.children[0] = null;
     }
     options.forEach(x => {
         var opt = <HTMLOptionElement>document.createElement('option');
