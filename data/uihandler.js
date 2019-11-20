@@ -613,22 +613,19 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
         return document.getElementById(id);
     }
     function getLanguage() {
-        var url = new URL(window.location.href);
-        var parsed = new URLSearchParams(url.search);
-        var found = texts_1.Language.en;
-        var param = parsed.get("ln");
-        var num = texts_1.Language[param];
-        if (num != null) {
-            switch (num) {
-                case texts_1.Language.de:
-                    found = texts_1.Language.de;
-                    break;
-                case texts_1.Language.en:
-                    found = texts_1.Language.en;
-                    break;
-            }
+        // var url = new URL(window.location.href);
+        // var parsed = new URLSearchParams(url.search);
+        // url
+        // var found = Language.en;
+        // var param: string = parsed.get("ln");
+        // var num = Language[param];
+        var param = window.location.href.split("ln=");
+        if (param.length > 0) {
+            var last = param[1];
+            var casted = texts_1.Language[last];
+            return casted;
         }
-        return found;
+        return texts_1.Language.de;
     }
 });
 //# sourceMappingURL=uihandler.js.map
