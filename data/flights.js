@@ -9,14 +9,8 @@ define(["require", "exports", "./convertcsv"], function (require, exports, conve
         AirportType[AirportType["mediumAirport"] = 3] = "mediumAirport";
         AirportType[AirportType["largeAirport"] = 4] = "largeAirport";
     })(AirportType = exports.AirportType || (exports.AirportType = {}));
-    class Airport {
-        getName() {
-            if (this.Code != null) {
-                return this.Code + " - " + this.Station;
-            }
-            return this.Station;
-        }
-        constructor(Station, Code, Latitude, Longitude, country, type) {
+    var Airport = /** @class */ (function () {
+        function Airport(Station, Code, Latitude, Longitude, country, type) {
             this.Station = Station;
             this.Code = Code;
             this.Country = country;
@@ -24,16 +18,24 @@ define(["require", "exports", "./convertcsv"], function (require, exports, conve
             this.Longitude = Longitude;
             this.Type = type;
         }
-    }
+        Airport.prototype.getName = function () {
+            if (this.Code != null) {
+                return this.Code + " - " + this.Station;
+            }
+            return this.Station;
+        };
+        return Airport;
+    }());
     exports.Airport = Airport;
-    class Country {
-        constructor(Code, Name) {
+    var Country = /** @class */ (function () {
+        function Country(Code, Name) {
             this.Code = Code;
             this.Name = name;
         }
-    }
+        return Country;
+    }());
     exports.Country = Country;
-    exports.data = convertcsv_1.plaindata.map(x => {
+    exports.data = convertcsv_1.plaindata.map(function (x) {
         var type;
         switch (x["t"]) {
             case "closed":
@@ -51,7 +53,7 @@ define(["require", "exports", "./convertcsv"], function (require, exports, conve
         }
         return new Airport(x["n"], x["co"], x["la"], x["lo"], x["cn"], type);
     });
-    exports.countries = convertcsv_1.plainCountries.map(x => {
+    exports.countries = convertcsv_1.plainCountries.map(function (x) {
         return new Country(x["code"], x["name"]);
     });
 });

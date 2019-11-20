@@ -187,12 +187,11 @@ function initMap() {
 
 export function addMapsScript(completion: () => void) {
     if (!document.querySelectorAll(`[src="${url}"]`).length) {
-        document.body.appendChild(Object.assign(
-            document.createElement('script'), {
-                type: 'text/javascript',
-                src: url,
-                onload: () => { initMap(); completion(); }
-            }));
+        var script = document.createElement("script");
+        script.type = "text/javascript";
+        script.src = url;
+        script.onload = function () { initMap(); completion(); }
+        document.body.appendChild(script);
     } else {
         this.doMapInitLogic();
     }

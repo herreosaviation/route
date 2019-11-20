@@ -14,7 +14,7 @@ define(["require", "exports"], function (require, exports) {
         }
         geoCoder.geocode({
             address: location
-        }, (results, status) => {
+        }, function (results, status) {
             if (results != null && results.length != 0 && regions.indexOf(getCountry(results[0].address_components)) != -1) {
                 console.log(getCountry(results[0].address_components));
                 success(results);
@@ -33,7 +33,8 @@ define(["require", "exports"], function (require, exports) {
         }
         return null;
     }
-    function performXMLHTTPRequest(address, success, error, method = "GET") {
+    function performXMLHTTPRequest(address, success, error, method) {
+        if (method === void 0) { method = "GET"; }
         var req = new XMLHttpRequest();
         req.open(method, address);
         req.onreadystatechange = function () {

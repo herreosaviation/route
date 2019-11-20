@@ -25,24 +25,24 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
     var inputPrint = document.getElementById("inputPrint");
     var inputCall = document.getElementById('inputCall');
     function initilizeUI() {
-        tabButton1.addEventListener("click", (e) => tabButtonClicked(e, "address"));
-        tabButton2.addEventListener("click", (e) => tabButtonClicked(e, "airport"));
-        continueButton.addEventListener('click', (e) => buttonContinueClicked(e));
-        buttonStart.addEventListener('click', x => {
+        tabButton1.addEventListener("click", function (e) { return tabButtonClicked(e, "address"); });
+        tabButton2.addEventListener("click", function (e) { return tabButtonClicked(e, "airport"); });
+        continueButton.addEventListener('click', function (e) { return buttonContinueClicked(e); });
+        buttonStart.addEventListener('click', function (x) {
             openRouteSelector(x);
         });
-        buttonStop.addEventListener('click', x => {
+        buttonStop.addEventListener('click', function (x) {
             openRouteSelector(x);
         });
-        buttonEnd.addEventListener('click', x => {
+        buttonEnd.addEventListener('click', function (x) {
             openRouteSelector(x);
         });
-        dropdownAddress.addEventListener("input", () => { dropDownTextChanged(event); });
-        dropdownAddress.addEventListener("change", () => { dropDownInputSelected(event); });
-        dropdownNearby.addEventListener("change", () => { dropDownInputSelected(event); });
-        dropdownAirport.addEventListener("change", () => { dropDownInputSelected(event); });
-        selectCountry.addEventListener("change", () => { selectCountryDidChange(event); });
-        copterSelect.addEventListener('change', () => {
+        dropdownAddress.addEventListener("input", function () { dropDownTextChanged(event); });
+        dropdownAddress.addEventListener("change", function () { dropDownInputSelected(event); });
+        dropdownNearby.addEventListener("change", function () { dropDownInputSelected(event); });
+        dropdownAirport.addEventListener("change", function () { dropDownInputSelected(event); });
+        selectCountry.addEventListener("change", function () { selectCountryDidChange(event); });
+        copterSelect.addEventListener('change', function () {
             try {
                 var cpt = copterSelect.options[copterSelect.selectedIndex].value;
                 var val = JSON.parse(cpt);
@@ -52,26 +52,20 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
             catch (_a) {
             }
         });
-        clearStopButton.addEventListener('click', () => { session.clearStops(); redrawView(); });
-        cancelSearchButton.addEventListener('click', () => { removeRouteSearch(false, null); });
-        inputMail.addEventListener('click', () => {
+        clearStopButton.addEventListener('click', function () { session.clearStops(); redrawView(); });
+        cancelSearchButton.addEventListener('click', function () { removeRouteSearch(false, null); });
+        inputMail.addEventListener('click', function () {
             var mailBody = "Hallo, ich hätte gerne weiter Informationen.";
             var route = session.getCurrentRoute();
-            route.forEach((x, index) => {
+            route.forEach(function (x, index) {
                 if (index == 0) {
-                    mailBody += `
-                    Start: 
-                ` + x.getName() + "\n" + x.getLatLng();
+                    mailBody += "\n                    Start: \n                " + x.getName() + "\n" + x.getLatLng();
                 }
                 else if (index == route.length - 1) {
-                    mailBody += `
-                Zwischenstopp: 
-            ` + x.getName() + "\n" + x.getLatLng();
+                    mailBody += "\n                Zwischenstopp: \n            " + x.getName() + "\n" + x.getLatLng();
                 }
                 else {
-                    mailBody += `
-                Ziel: 
-            ` + x.getName() + "\n" + x.getLatLng();
+                    mailBody += "\n                Ziel: \n            " + x.getName() + "\n" + x.getLatLng();
                 }
             });
             var mailSubject = "Anfrage";
@@ -87,14 +81,14 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
             }
             sendMail();
         });
-        inputPrint.addEventListener('click', () => {
+        inputPrint.addEventListener('click', function () {
             if (session.getCurrentRoute().length > 1) {
                 var image = document.getElementById("mapimg");
                 bla(document.getElementById("map"), {
                     useCORS: true,
-                }).then(canvas => {
+                }).then(function (canvas) {
                     var img = canvas.toDataURL("image/png");
-                    var listened = () => {
+                    var listened = function () {
                         window.print();
                         image.removeEventListener("load", listened);
                     };
@@ -108,13 +102,13 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
                 alert("Keine Route zum Drucken ausgewählt");
             }
         });
-        inputCall.addEventListener('click', () => {
+        inputCall.addEventListener('click', function () {
             window.location.href = "tel:+491717137167";
         });
-        background.addEventListener('click', () => {
+        background.addEventListener('click', function () {
             fullBackground();
         });
-        mapHandler.setFullMapAction((map) => {
+        mapHandler.setFullMapAction(function (map) {
             fullMap(map);
         });
         prefillCoptersSelect(copter_1.copters);
@@ -152,7 +146,7 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
         }
         else {
             var cpt = session.currentCopter != null ? session.currentCopter : copter_1.copters[0];
-            ResultHandler_1.performRoute(currentRoute, cpt, x => {
+            ResultHandler_1.performRoute(currentRoute, cpt, function (x) {
                 mapHandler.drawCarRoute(x.carDirectionResult);
                 mapHandler.drawCopterRoute(x.copterDirections);
                 var tbl = getActiveTable();
@@ -161,7 +155,7 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
                 }
                 var wrapper = document.getElementById("wrapper");
                 wrapper.appendChild(x.table);
-            }, () => {
+            }, function () {
                 alert("Route konnte nicht berechnet werden.");
             });
         }
@@ -169,10 +163,10 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
     function openRouteSelector(event) {
         var sender = event.srcElement;
         selectCountry.value = "Alle";
-        var sel = new ActiveRouteSelection_1.ActiveRouteSelection("Start", sender == buttonStart ? session.ActiveRouteType.Start : sender == buttonStop ? session.ActiveRouteType.Middle : session.ActiveRouteType.End, () => {
+        var sel = new ActiveRouteSelection_1.ActiveRouteSelection("Start", sender == buttonStart ? session.ActiveRouteType.Start : sender == buttonStop ? session.ActiveRouteType.Middle : session.ActiveRouteType.End, function () {
             session.setCurrentRouteObject();
             redrawView();
-        }, () => { alert('mhm'); });
+        }, function () { alert('mhm'); });
         setActiveRouteSelector(sel);
         removeRouteSearch(true, session.activeRouteSelector.type);
         tabButton1.click();
@@ -221,24 +215,24 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
         if (timer != null) {
             window.clearTimeout(timer);
         }
-        timer = window.setTimeout(() => {
+        timer = window.setTimeout(function () {
             switch (inputElement) {
                 case dropdownAddress:
-                    requestHandler_1.searchForLocation(inputElement.value, (response) => {
+                    requestHandler_1.searchForLocation(inputElement.value, function (response) {
                         updateAddressDataList(getDataListForInputElement(inputElement), response, inputElement.value);
                         if (response.length == 1) {
                             var parsed = response[0];
                             dropdownNearby.value = null;
-                            session.activeRouteSelector.setCurrentSelectedSearchValue(parsed, x => {
+                            session.activeRouteSelector.setCurrentSelectedSearchValue(parsed, function (x) {
                                 dropdownNearby.value = x.airport.getName();
-                                session.activeRouteSelector.setCurrentSelectedAirport(x.airport, y => { });
+                                session.activeRouteSelector.setCurrentSelectedAirport(x.airport, function (y) { });
                             });
                             var datalist = getDataListForInputElement(dropdownNearby);
-                            updateAirportDataList(datalist, session.activeRouteSelector.currentMarkers.map(x => x.airport));
+                            updateAirportDataList(datalist, session.activeRouteSelector.currentMarkers.map(function (x) { return x.airport; }));
                             dropdownNearby.disabled = datalist.options.length == 0;
                             continueButton.disabled = false;
                         }
-                    }, () => console.log("no results..."));
+                    }, function () { return console.log("no results..."); });
                     break;
             }
             window.clearTimeout(timer);
@@ -254,7 +248,7 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
             updateAirportDataList(getDataListForInputElement(dropdownAirport), flights_1.data);
         }
         else {
-            updateAirportDataList(getDataListForInputElement(dropdownAirport), flights_1.data.filter(x => {
+            updateAirportDataList(getDataListForInputElement(dropdownAirport), flights_1.data.filter(function (x) {
                 return x.Country == country;
             }));
         }
@@ -268,12 +262,12 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
                     var item = getDataListForInputElement(input).options[0].getAttribute("data");
                     var parsed = parseGeolocationFromString(item);
                     dropdownNearby.value = null;
-                    session.activeRouteSelector.setCurrentSelectedSearchValue(parsed, x => {
+                    session.activeRouteSelector.setCurrentSelectedSearchValue(parsed, function (x) {
                         dropdownNearby.value = x.airport.getName();
-                        session.activeRouteSelector.setCurrentSelectedAirport(x.airport, y => { });
+                        session.activeRouteSelector.setCurrentSelectedAirport(x.airport, function (y) { });
                     });
                     var datalist = getDataListForInputElement(dropdownNearby);
-                    updateAirportDataList(datalist, session.activeRouteSelector.currentMarkers.map(x => x.airport));
+                    updateAirportDataList(datalist, session.activeRouteSelector.currentMarkers.map(function (x) { return x.airport; }));
                     dropdownNearby.disabled = datalist.options.length == 0;
                     continueButton.disabled = false;
                 }
@@ -283,7 +277,7 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
                     try {
                         var item = dl.options.namedItem(input.value).getAttribute("data");
                         var parsedAirport = JSON.parse(item);
-                        session.activeRouteSelector.setCurrentSelectedAirport(parsedAirport, x => { });
+                        session.activeRouteSelector.setCurrentSelectedAirport(parsedAirport, function (x) { });
                         continueButton.disabled = false;
                     }
                     catch (_a) {
@@ -297,7 +291,7 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
                         // var item = getDataListForInputElement(input).options[dl.index].;
                         var item = dl.options.namedItem(input.value).getAttribute("data");
                         var parsedAirport = JSON.parse(item);
-                        session.activeRouteSelector.setCurrentSelectedAirport(parsedAirport, x => { });
+                        session.activeRouteSelector.setCurrentSelectedAirport(parsedAirport, function (x) { });
                         continueButton.disabled = false;
                     }
                     catch (_b) {
@@ -331,7 +325,7 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
         while (dl.children.length != 0) {
             dl.children[0].remove();
         }
-        options.forEach(x => {
+        options.forEach(function (x) {
             var opt = document.createElement('option');
             opt.value = x.formatted_address;
             opt.textContent = initial;
@@ -344,7 +338,7 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
         while (dl.children.length != 0) {
             dl.children[0].remove();
         }
-        options.forEach(x => {
+        options.forEach(function (x) {
             var opt = document.createElement('option');
             var name = x.getName();
             opt.value = name;
@@ -393,7 +387,7 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
         while (copterSelect.children.length > 0) {
             copterSelect.removeChild(copterSelect.children[0]);
         }
-        copters.forEach(x => {
+        copters.forEach(function (x) {
             var option = document.createElement('option');
             option.innerHTML = x.name;
             option.value = JSON.stringify(x);
@@ -409,7 +403,7 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
         option.innerHTML = "Alle";
         option.value = "Alle";
         selectCountry.options.add(option);
-        convertcsv_1.plainCountries.forEach(x => {
+        convertcsv_1.plainCountries.forEach(function (x) {
             var opt = document.createElement('option');
             opt.innerHTML = x.name;
             opt.value = x.code;
@@ -424,7 +418,7 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
     }
     var ishidden = false;
     var div = document.getElementById("ausblenden");
-    div.addEventListener("click", () => {
+    div.addEventListener("click", function () {
         ishidden = !ishidden;
         if (ishidden) {
             document.getElementById("wrapper").style.height = "0px";

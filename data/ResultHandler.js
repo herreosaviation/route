@@ -5,7 +5,7 @@ define(["require", "exports", "./mapHandler", "./texts"], function (require, exp
     function performRoute(route, copter, success, failure) {
         var steps;
         if (route.length > 1) {
-            steps = route.slice(1, route.length).map((_x, index) => {
+            steps = route.slice(1, route.length).map(function (_x, index) {
                 var cptDistance = calculateDistances(route[index].getLatLng(), route[index + 1].getLatLng());
                 var cptDuration = cptDistance / copter.speed;
                 var step = {
@@ -18,13 +18,13 @@ define(["require", "exports", "./mapHandler", "./texts"], function (require, exp
                 };
                 return step;
             });
-            var numberOfCopterStops = Math.floor((steps.map(x => x.copterDistance / 1000).reduce((x, y) => x + y) / copter.speed) / copter.flightTime);
-            mapHandler.calculateCarRoute(route.map(x => x.getLatLng()), result => {
+            var numberOfCopterStops = Math.floor((steps.map(function (x) { return x.copterDistance / 1000; }).reduce(function (x, y) { return x + y; }) / copter.speed) / copter.flightTime);
+            mapHandler.calculateCarRoute(route.map(function (x) { return x.getLatLng(); }), function (result) {
                 if (result.routes.length < 1) {
                     failure();
                 }
                 else {
-                    result.routes[0].legs.forEach((x, i) => {
+                    result.routes[0].legs.forEach(function (x, i) {
                         steps[i].carDistance = x.distance.value;
                         steps[i].carDuration = x.duration.value;
                     });
@@ -33,7 +33,7 @@ define(["require", "exports", "./mapHandler", "./texts"], function (require, exp
                         steps: steps,
                         table: createTable(steps, numberOfCopterStops),
                         carDirectionResult: result,
-                        copterDirections: route.map(x => x.getLatLng()),
+                        copterDirections: route.map(function (x) { return x.getLatLng(); }),
                         copterNumberOfStops: numberOfCopterStops
                     });
                 }
@@ -54,7 +54,7 @@ define(["require", "exports", "./mapHandler", "./texts"], function (require, exp
         if (steps.length >= 1) {
             data.push([steps[0].from.getName(), "-", "-", "-", "-", "-"]);
         }
-        steps.forEach(x => {
+        steps.forEach(function (x) {
             var cur = [];
             cur.push(x.to.getName());
             cur.push(x.copterDistance.toKMMM());
@@ -65,11 +65,11 @@ define(["require", "exports", "./mapHandler", "./texts"], function (require, exp
             data.push(cur);
         });
         var gesamt = [texts_1.getText(texts_1.Texts.tableFinal)];
-        gesamt.push(steps.map(x => x.copterDistance).reduce((x, y) => x + y).toKMMM());
-        gesamt.push(steps.map(x => x.copterDuration).reduce((x, y) => x + y).toHHMM());
-        gesamt.push(steps.map(x => x.carDuration).reduce((x, y) => x + y).toHHMM());
-        gesamt.push(steps.map(x => x.carDistance).reduce((x, y) => x + y).toKMMM());
-        gesamt.push(steps.map(x => x.carDuration - x.copterDuration).reduce((x, y) => x + y).toHHMM());
+        gesamt.push(steps.map(function (x) { return x.copterDistance; }).reduce(function (x, y) { return x + y; }).toKMMM());
+        gesamt.push(steps.map(function (x) { return x.copterDuration; }).reduce(function (x, y) { return x + y; }).toHHMM());
+        gesamt.push(steps.map(function (x) { return x.carDuration; }).reduce(function (x, y) { return x + y; }).toHHMM());
+        gesamt.push(steps.map(function (x) { return x.carDistance; }).reduce(function (x, y) { return x + y; }).toKMMM());
+        gesamt.push(steps.map(function (x) { return x.carDuration - x.copterDuration; }).reduce(function (x, y) { return x + y; }).toHHMM());
         data.push([]);
         data.push(gesamt);
         data.push([texts_1.getText(texts_1.Texts.tableCaValuesInfo)]);
@@ -79,14 +79,14 @@ define(["require", "exports", "./mapHandler", "./texts"], function (require, exp
         else if (numberOfStops > 1) {
             data.push([texts_1.getText(texts_1.Texts.tableNeededStopsInfo, numberOfStops)]);
         }
-        data.forEach(x => {
+        data.forEach(function (x) {
             var row = table.insertRow();
             if (x.length == 0) {
                 row.className = "border_bottom";
                 var cell = row.insertCell();
                 cell.colSpan = data[0].length;
             }
-            x.forEach(y => {
+            x.forEach(function (y) {
                 var cell = row.insertCell();
                 cell.innerHTML = y;
                 if (x.length == 1) {

@@ -2,7 +2,7 @@ define(["require", "exports", "./uihandler", "./mapHandler"], function (require,
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     uihandler_1.initilizeUI();
-    mapHandler_1.addMapsScript(() => { });
+    mapHandler_1.addMapsScript(function () { });
     Number.prototype.toHHMM = function () {
         var dt = new Date(this * 1000).toISOString();
         return dt.substr(11, 5);

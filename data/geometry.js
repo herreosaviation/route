@@ -3,22 +3,25 @@ define(["require", "exports"], function (require, exports) {
     Object.defineProperty(exports, "__esModule", { value: true });
     // Converts JSON strings to/from your types
     // and asserts the results of JSON.parse at runtime
-    class Convert {
-        static toGeometry(json) {
+    var Convert = /** @class */ (function () {
+        function Convert() {
+        }
+        Convert.toGeometry = function (json) {
             return cast(JSON.parse(json), r("Geometry"));
-        }
-        static geometryToJson(value) {
+        };
+        Convert.geometryToJson = function (value) {
             return JSON.stringify(uncast(value, r("Geometry")), null, 2);
-        }
-    }
+        };
+        return Convert;
+    }());
     exports.Convert = Convert;
     function invalidValue(typ, val) {
-        throw Error(`Invalid value ${JSON.stringify(val)} for type ${JSON.stringify(typ)}`);
+        throw Error("Invalid value " + JSON.stringify(val) + " for type " + JSON.stringify(typ));
     }
     function jsonToJSProps(typ) {
         if (typ.jsonToJS === undefined) {
             var map = {};
-            typ.props.forEach((p) => map[p.json] = { key: p.js, typ: p.typ });
+            typ.props.forEach(function (p) { return map[p.json] = { key: p.js, typ: p.typ }; });
             typ.jsonToJS = map;
         }
         return typ.jsonToJS;
@@ -26,7 +29,7 @@ define(["require", "exports"], function (require, exports) {
     function jsToJSONProps(typ) {
         if (typ.jsToJSON === undefined) {
             var map = {};
-            typ.props.forEach((p) => map[p.js] = { key: p.json, typ: p.typ });
+            typ.props.forEach(function (p) { return map[p.js] = { key: p.json, typ: p.typ }; });
             typ.jsToJSON = map;
         }
         return typ.jsToJSON;
@@ -58,13 +61,13 @@ define(["require", "exports"], function (require, exports) {
             // val must be an array with no invalid elements
             if (!Array.isArray(val))
                 return invalidValue("array", val);
-            return val.map(el => transform(el, typ, getProps));
+            return val.map(function (el) { return transform(el, typ, getProps); });
         }
         function transformDate(typ, val) {
             if (val === null) {
                 return null;
             }
-            const d = new Date(val);
+            var d = new Date(val);
             if (isNaN(d.valueOf())) {
                 return invalidValue("Date", val);
             }
@@ -75,12 +78,12 @@ define(["require", "exports"], function (require, exports) {
                 return invalidValue("object", val);
             }
             var result = {};
-            Object.getOwnPropertyNames(props).forEach(key => {
-                const prop = props[key];
-                const v = Object.prototype.hasOwnProperty.call(val, key) ? val[key] : undefined;
+            Object.getOwnPropertyNames(props).forEach(function (key) {
+                var prop = props[key];
+                var v = Object.prototype.hasOwnProperty.call(val, key) ? val[key] : undefined;
                 result[prop.key] = transform(v, prop.typ, getProps);
             });
-            Object.getOwnPropertyNames(val).forEach(key => {
+            Object.getOwnPropertyNames(val).forEach(function (key) {
                 if (!Object.prototype.hasOwnProperty.call(props, key)) {
                     result[key] = transform(val[key], additional, getProps);
                 }
@@ -121,19 +124,23 @@ define(["require", "exports"], function (require, exports) {
     function a(typ) {
         return { arrayItems: typ };
     }
-    function u(...typs) {
+    function u() {
+        var typs = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            typs[_i] = arguments[_i];
+        }
         return { unionMembers: typs };
     }
     function o(props, additional) {
-        return { props, additional };
+        return { props: props, additional: additional };
     }
     function m(additional) {
-        return { props: [], additional };
+        return { props: [], additional: additional };
     }
     function r(name) {
         return { ref: name };
     }
-    const typeMap = {
+    var typeMap = {
         "Geometry": o([
             { json: "results", js: "results", typ: a(r("Result")) },
             { json: "status", js: "status", typ: "" },

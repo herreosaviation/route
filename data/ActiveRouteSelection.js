@@ -1,8 +1,8 @@
 define(["require", "exports", "./mapHandler"], function (require, exports, mapHandler) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    class ActiveRouteSelection {
-        constructor(title, type, onValueSelected, onCancel, stopindex) {
+    var ActiveRouteSelection = /** @class */ (function () {
+        function ActiveRouteSelection(title, type, onValueSelected, onCancel, stopindex) {
             this.stopIndex = null;
             this.title = title;
             this.type = type;
@@ -11,7 +11,7 @@ define(["require", "exports", "./mapHandler"], function (require, exports, mapHa
             this.currentMarkers = [];
             this.currentCircles = [];
         }
-        setCurrentSelectedAirport(airport, markerSelected) {
+        ActiveRouteSelection.prototype.setCurrentSelectedAirport = function (airport, markerSelected) {
             if (airport == null)
                 return;
             this.currentAirportMarker = {
@@ -27,38 +27,38 @@ define(["require", "exports", "./mapHandler"], function (require, exports, mapHa
             };
             mapHandler.drawMarkers([this.currentAirportMarker], markerSelected);
             mapHandler.setCenter(new google.maps.LatLng(this.currentAirportMarker.airport.Latitude, this.currentAirportMarker.airport.Longitude));
-        }
-        removeCurrentmarker() {
+        };
+        ActiveRouteSelection.prototype.removeCurrentmarker = function () {
             if (this.currentAirportMarker != null) {
                 this.currentAirportMarker.marker.setMap(null);
             }
             if (this.currentCircles != null) {
-                this.currentCircles.forEach(x => x.setMap(null));
+                this.currentCircles.forEach(function (x) { return x.setMap(null); });
             }
             if (this.currentMarkers != null) {
-                this.currentMarkers.forEach(x => {
+                this.currentMarkers.forEach(function (x) {
                     if (x.marker != null) {
                         x.marker.setMap(null);
                     }
                 });
             }
-        }
-        setCurrentSelectedSearchValue(val, markerSelected) {
+        };
+        ActiveRouteSelection.prototype.setCurrentSelectedSearchValue = function (val, markerSelected) {
             if (this.currentAirportMarker != null)
                 this.currentAirportMarker.marker.setMap(null);
-            this.currentMarkers.forEach(x => x.marker.setMap(null));
-            this.currentCircles.forEach(x => x.setMap(null));
+            this.currentMarkers.forEach(function (x) { return x.marker.setMap(null); });
+            this.currentCircles.forEach(function (x) { return x.setMap(null); });
             this.currentSelectedSearchValue = val;
             if (val == null)
                 return;
             var kmRadius = 30;
             this.currentCircles = [(mapHandler.drawCircle(val.geometry.location, kmRadius * 1000))];
             var nearbyAirports = mapHandler.GetNearbyAirports(val.geometry.location.lat(), val.geometry.location.lng(), kmRadius);
-            this.setDisplayedAirportMarkers(nearbyAirports.map(x => x.airport), markerSelected);
+            this.setDisplayedAirportMarkers(nearbyAirports.map(function (x) { return x.airport; }), markerSelected);
             mapHandler.setBounds(this.currentCircles[0].getBounds());
-        }
-        setDisplayedAirportMarkers(objs, markerSelected) {
-            var wrapped = objs.map(x => {
+        };
+        ActiveRouteSelection.prototype.setDisplayedAirportMarkers = function (objs, markerSelected) {
+            var wrapped = objs.map(function (x) {
                 var wrap = {
                     airport: x,
                     marker: new google.maps.Marker({
@@ -72,17 +72,18 @@ define(["require", "exports", "./mapHandler"], function (require, exports, mapHa
                 };
                 return wrap;
             });
-            mapHandler.drawMarkers(wrapped, x => {
+            mapHandler.drawMarkers(wrapped, function (x) {
                 markerSelected(x);
             });
             this.currentMarkers = wrapped;
-        }
-        clear() {
+        };
+        ActiveRouteSelection.prototype.clear = function () {
             this.setCurrentSelectedAirport(null, null);
             this.setCurrentSelectedSearchValue(null, null);
             this.setDisplayedAirportMarkers([], null);
-        }
-    }
+        };
+        return ActiveRouteSelection;
+    }());
     exports.ActiveRouteSelection = ActiveRouteSelection;
 });
 //# sourceMappingURL=ActiveRouteSelection.js.map

@@ -7,10 +7,6 @@ export class TimeSpan {
     private _millis: number;
 
     private static interval(value: number, scale: number): TimeSpan {
-        if (Number.isNaN(value)) {
-            throw new Error("value can't be NaN");
-        }
-
         const tmp = value * scale;
         const millis = TimeSpan.round(tmp + (value >= 0 ? 0.5 : -0.5));
         if ((millis > TimeSpan.maxValue.totalMilliseconds) || (millis < TimeSpan.minValue.totalMilliseconds)) {
@@ -46,11 +42,11 @@ export class TimeSpan {
     }
 
     public static get maxValue(): TimeSpan {
-        return new TimeSpan(Number.MAX_SAFE_INTEGER);
+        return new TimeSpan(9007199254740991);
     }
 
     public static get minValue(): TimeSpan {
-        return new TimeSpan(Number.MIN_SAFE_INTEGER);
+        return new TimeSpan(-9007199254740991);
     }
 
     public static fromDays(value: number): TimeSpan {

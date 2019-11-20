@@ -7,20 +7,20 @@ define(["require", "exports", "./mapHandler"], function (require, exports, mapHa
         ActiveRouteType[ActiveRouteType["Middle"] = 1] = "Middle";
         ActiveRouteType[ActiveRouteType["End"] = 2] = "End";
     })(ActiveRouteType = exports.ActiveRouteType || (exports.ActiveRouteType = {}));
-    class RouteObjectWrapper {
-        constructor(geoCoderResult, airportResult) {
+    var RouteObjectWrapper = /** @class */ (function () {
+        function RouteObjectWrapper(geoCoderResult, airportResult) {
             this.geoCoderResult = geoCoderResult;
             this.airportResult = airportResult;
         }
-        getLatLng() {
+        RouteObjectWrapper.prototype.getLatLng = function () {
             if (this.geoCoderResult != null) {
                 return this.geoCoderResult.geometry.location;
             }
             else {
                 return new google.maps.LatLng(this.airportResult.Latitude, this.airportResult.Longitude);
             }
-        }
-        getName() {
+        };
+        RouteObjectWrapper.prototype.getName = function () {
             if (this.geoCoderResult != null) {
                 return this.geoCoderResult.formatted_address;
             }
@@ -32,8 +32,9 @@ define(["require", "exports", "./mapHandler"], function (require, exports, mapHa
                     return this.airportResult.Station;
                 }
             }
-        }
-    }
+        };
+        return RouteObjectWrapper;
+    }());
     exports.RouteObjectWrapper = RouteObjectWrapper;
     exports.currentStops = [];
     exports.currentCopter = null;
@@ -46,7 +47,7 @@ define(["require", "exports", "./mapHandler"], function (require, exports, mapHa
         if (exports.currentStart != null) {
             st.push(exports.currentStart);
         }
-        exports.currentStops.forEach(x => st.push(x));
+        exports.currentStops.forEach(function (x) { return st.push(x); });
         if (exports.currentEnd != null) {
             st.push(exports.currentEnd);
         }
@@ -54,7 +55,7 @@ define(["require", "exports", "./mapHandler"], function (require, exports, mapHa
     }
     exports.getCurrentRoute = getCurrentRoute;
     function setCurrentRouteObject() {
-        getCurrentRoute().forEach(x => {
+        getCurrentRoute().forEach(function (x) {
             if (x.marker != null) {
                 x.marker.setMap(null);
             }
@@ -72,7 +73,7 @@ define(["require", "exports", "./mapHandler"], function (require, exports, mapHa
                 break;
         }
         exports.activeRouteSelector.setCurrentSelectedSearchValue(null, null);
-        mapHandler.drawMarkers(getCurrentRoute().map(x => {
+        mapHandler.drawMarkers(getCurrentRoute().map(function (x) {
             var mk = new google.maps.Marker({
                 position: x.getLatLng(),
                 clickable: true,
@@ -83,7 +84,7 @@ define(["require", "exports", "./mapHandler"], function (require, exports, mapHa
                 marker: mk
             };
             return obj;
-        }), x => {
+        }), function (x) {
         });
     }
     exports.setCurrentRouteObject = setCurrentRouteObject;
@@ -91,7 +92,8 @@ define(["require", "exports", "./mapHandler"], function (require, exports, mapHa
         exports.currentStops = [];
     }
     exports.clearStops = clearStops;
-    function prepareRouteSelector(next, removeOldEntrys = true) {
+    function prepareRouteSelector(next, removeOldEntrys) {
+        if (removeOldEntrys === void 0) { removeOldEntrys = true; }
         if (removeOldEntrys && exports.activeRouteSelector != null) {
             exports.activeRouteSelector.setCurrentSelectedSearchValue(null, null);
         }

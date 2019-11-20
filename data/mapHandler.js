@@ -11,31 +11,31 @@ define(["require", "exports", "./globals", "./flights", "./mapstyle"], function 
     var currentCopterPolyLines = [];
     var currentDirections = [];
     function GetNearbyAirports(lat, lng, distance) {
-        return flights_1.data.map(cur => {
+        return flights_1.data.map(function (cur) {
             return {
                 distance: getDistanceFromLatLonInKm(lat, lng, cur.Latitude, cur.Longitude),
                 airport: cur
             };
-        }).filter(cur => {
+        }).filter(function (cur) {
             return cur.distance <= distance;
-        }).sort((x, y) => x.distance > y.distance ? 1 : x.distance == y.distance ? 0 : -1);
+        }).sort(function (x, y) { return x.distance > y.distance ? 1 : x.distance == y.distance ? 0 : -1; });
     }
     exports.GetNearbyAirports = GetNearbyAirports;
     function GetNearestAirports(pos, results) {
-        return flights_1.data.map(cur => {
+        return flights_1.data.map(function (cur) {
             return {
                 distance: getDistanceFromLatLonInKm(pos.lat, pos.lng, cur.Latitude, cur.Longitude),
                 airport: cur
             };
-        }).sort((x, y) => x.distance > y.distance ? 1 : x.distance == y.distance ? 0 : -1).slice(0, results - 1);
+        }).sort(function (x, y) { return x.distance > y.distance ? 1 : x.distance == y.distance ? 0 : -1; }).slice(0, results - 1);
     }
     exports.GetNearestAirports = GetNearestAirports;
     function calculateCarRoute(route, success, failure) {
         var service = new google.maps.DirectionsService();
-        var mapped = route.map(x => x);
+        var mapped = route.map(function (x) { return x; });
         var start = mapped[0];
         var end = mapped[mapped.length - 1];
-        var between = mapped.length > 2 ? mapped.slice(1, mapped.length - 1).map(x => {
+        var between = mapped.length > 2 ? mapped.slice(1, mapped.length - 1).map(function (x) {
             var obj = {
                 location: x,
                 stopover: true
@@ -47,7 +47,7 @@ define(["require", "exports", "./globals", "./flights", "./mapstyle"], function 
             destination: end,
             waypoints: between,
             travelMode: google.maps.TravelMode.DRIVING
-        }, (result, status) => {
+        }, function (result, status) {
             if (status == google.maps.DirectionsStatus.OK) {
                 success(result);
             }
@@ -59,7 +59,7 @@ define(["require", "exports", "./globals", "./flights", "./mapstyle"], function 
     }
     exports.calculateCarRoute = calculateCarRoute;
     function drawCarRoute(calculationResponse) {
-        currentDirections.forEach(x => {
+        currentDirections.forEach(function (x) {
             x.setMap(null);
         });
         currentDirections = [];
@@ -73,7 +73,7 @@ define(["require", "exports", "./globals", "./flights", "./mapstyle"], function 
     }
     exports.drawCarRoute = drawCarRoute;
     function drawCopterRoute(coordinates) {
-        currentCopterPolyLines.forEach(x => x.setMap(null));
+        currentCopterPolyLines.forEach(function (x) { return x.setMap(null); });
         currentCopterPolyLines = [];
         var polyLine = new google.maps.Polyline({
             path: coordinates,
@@ -87,17 +87,17 @@ define(["require", "exports", "./globals", "./flights", "./mapstyle"], function 
     }
     exports.drawCopterRoute = drawCopterRoute;
     function drawMarkers(markers, markerSelected) {
-        markers.forEach(x => {
+        markers.forEach(function (x) {
             currentMarkers.push(x.marker);
             x.marker.setMap(exports.map);
-            x.marker.addListener('click', event => {
+            x.marker.addListener('click', function (event) {
                 markerSelected(x);
             });
         });
     }
     exports.drawMarkers = drawMarkers;
     function removeAllMarkers() {
-        currentMarkers.forEach(x => {
+        currentMarkers.forEach(function (x) {
             x.setMap(null);
         });
         currentMarkers = [];
@@ -113,7 +113,9 @@ define(["require", "exports", "./globals", "./flights", "./mapstyle"], function 
         return circle;
     }
     exports.drawCircle = drawCircle;
-    function setCenter(location, offsetX = null, offsetY = null) {
+    function setCenter(location, offsetX, offsetY) {
+        if (offsetX === void 0) { offsetX = null; }
+        if (offsetY === void 0) { offsetY = null; }
         if (offsetX == null) {
             offsetX = 0;
         }
@@ -141,14 +143,14 @@ define(["require", "exports", "./globals", "./flights", "./mapstyle"], function 
             styles: mapstyle_1.style,
             gestureHandling: 'cooperative'
         });
-        const viewportmeta = document.querySelector('meta[name=viewport]');
-        exports.map.addListener("click", () => {
+        var viewportmeta = document.querySelector('meta[name=viewport]');
+        exports.map.addListener("click", function () {
             if (fullMapAction != null) {
                 fullMapAction(exports.map);
             }
             viewportmeta.setAttribute('content', "initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0");
         });
-        exports.map.addListener("drag", () => {
+        exports.map.addListener("drag", function () {
             if (fullMapAction != null) {
                 fullMapAction(exports.map);
             }
@@ -156,12 +158,12 @@ define(["require", "exports", "./globals", "./flights", "./mapstyle"], function 
         });
     }
     function addMapsScript(completion) {
-        if (!document.querySelectorAll(`[src="${url}"]`).length) {
-            document.body.appendChild(Object.assign(document.createElement('script'), {
-                type: 'text/javascript',
-                src: url,
-                onload: () => { initMap(); completion(); }
-            }));
+        if (!document.querySelectorAll("[src=\"" + url + "\"]").length) {
+            var script = document.createElement("script");
+            script.type = "text/javascript";
+            script.src = url;
+            script.onload = function () { initMap(); completion(); };
+            document.body.appendChild(script);
         }
         else {
             this.doMapInitLogic();

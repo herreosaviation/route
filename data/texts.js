@@ -52,7 +52,8 @@ define(["require", "exports"], function (require, exports) {
         exports.language = lang;
     }
     exports.setAppLanguage = setAppLanguage;
-    function getText(type, index = null) {
+    function getText(type, index) {
+        if (index === void 0) { index = null; }
         var isde = exports.language == Language.de;
         switch (type) {
             case Texts.selectedCopter:

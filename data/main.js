@@ -2,7 +2,7 @@ define(["require", "exports", "./uihandler", "./mapHandler", "./texts", "./times
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     uihandler_1.initilizeUI();
-    mapHandler_1.addMapsScript(() => { });
+    mapHandler_1.addMapsScript(function () { });
     Number.prototype.toHHMM = function () {
         var ts = timespan_1.TimeSpan.fromSeconds(this);
         var hours = (Math.floor(ts.totalHours)).toString();

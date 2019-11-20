@@ -5,7 +5,7 @@
         "outDir": "data",
         // "sourceMap": false,
         "sourceMap": true,
-        "target": "es6",
+        "target": "es5",
         "allowJs": true
     },
     "exclude": [
