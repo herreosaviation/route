@@ -532,7 +532,7 @@ function updateAddressDataList(dl: HTMLDataListElement, options: google.maps.Geo
 
 function updateAirportDataList(dl: HTMLDataListElement, options: Airport[]) {
     while (dl.children.length != 0) {
-        dl.children[0].remove();
+        dl.children[0] = null;
     }
     options.forEach(x => {
         var opt = <HTMLOptionElement>document.createElement('option');
