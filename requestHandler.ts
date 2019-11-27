@@ -18,6 +18,9 @@ export function searchForLocation(location: string, success: (response: google.m
     }, (results, status) => {
         if (results != null && results.length != 0 && regions.indexOf(getCountry(results[0].address_components)) != -1) {
             console.log(getCountry(results[0].address_components));
+            while (results.length > 1) {
+                results.pop();
+            }
             success(results);
         }
         else {

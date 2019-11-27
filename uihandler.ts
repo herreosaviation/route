@@ -518,7 +518,12 @@ function getDataListForInputElement(sender: HTMLInputElement): HTMLDataListEleme
 
 function updateAddressDataList(dl: HTMLDataListElement, options: google.maps.GeocoderResult[], initial: string) {
     while (dl.children.length != 0) {
-        dl.children[0] = null;
+        if (isIE()) {
+            dl.children[0] = null;
+        }
+        else {
+            dl.children[0].remove();
+        }
     }
     options.forEach(x => {
         var opt = <HTMLOptionElement>document.createElement('option');
@@ -740,4 +745,18 @@ function getLanguage(): Language {
     }
 
     return Language.de;
+}
+
+function isIE(): boolean {
+    var ua = window.navigator.userAgent;
+    var msie = ua.indexOf("MSIE ");
+
+    if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
+        return true;
+    }
+    else {
+        return false;
+    }
+
+    return false;
 }

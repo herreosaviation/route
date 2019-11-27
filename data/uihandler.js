@@ -440,7 +440,12 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
     }
     function updateAddressDataList(dl, options, initial) {
         while (dl.children.length != 0) {
-            dl.children[0] = null;
+            if (isIE()) {
+                dl.children[0] = null;
+            }
+            else {
+                dl.children[0].remove();
+            }
         }
         options.forEach(function (x) {
             var opt = document.createElement('option');
@@ -626,6 +631,17 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
             return casted;
         }
         return texts_1.Language.de;
+    }
+    function isIE() {
+        var ua = window.navigator.userAgent;
+        var msie = ua.indexOf("MSIE ");
+        if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+        return false;
     }
 });
 //# sourceMappingURL=uihandler.js.map
