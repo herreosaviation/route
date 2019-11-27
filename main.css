@@ -306,12 +306,19 @@ screen and (max-width:640px) {
         line-break: auto;
     }
 
+    #RouteResultTable{
+        width: 100%;
+        font-size: 8px;
+        padding-top: 0px;
+    }
+
     #routeSelectionBackground {
         width: 100%;
         position: unset;
         z-index: unset;
         color: black;
         background-color: unset;
+        padding: 0px;
     }
 
     select{
