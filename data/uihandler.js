@@ -162,6 +162,12 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
         if (copter_1.copters.length > 0) {
             session.setCurrentCopter(copter_1.copters[0]);
         }
+        if (isIE()) {
+            debugger;
+            tabButton2.style.display = "none";
+            dropdownNearby.type = "hidden";
+            alert("Ihr Internetbrowser wird nicht vollständig unterstzützt. Um alle Features dieser Anwendung nutzen zu können, wechseln sie bitte auf einen aktuellen Browser.");
+        }
         redrawView();
     }
     exports.initilizeUI = initilizeUI;
@@ -439,14 +445,16 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
         }
     }
     function updateAddressDataList(dl, options, initial) {
-        while (dl.children.length != 0) {
-            if (isIE()) {
-                dl.children[0] = null;
-            }
-            else {
-                dl.children[0].remove();
-            }
-        }
+        dl.innerHTML = "";
+        // while (dl.children.length != 0) {
+        //     console.log("try to remove stuff");
+        //     if (isIE()) {
+        //         dl.children[0] = null;
+        //     }
+        //     else {
+        //         dl.children[0].remove();
+        //     }
+        // }
         options.forEach(function (x) {
             var opt = document.createElement('option');
             opt.value = x.formatted_address;
@@ -457,9 +465,18 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
         console.log(dl.children.length);
     }
     function updateAirportDataList(dl, options) {
-        while (dl.children.length != 0) {
-            dl.children[0] = null;
-        }
+        console.log("should remove " + dl.children.length + " items");
+        console.log(options.length);
+        dl.innerHTML = "";
+        // while (dl.children.length != 0) {
+        //     console.log("removed...")
+        //     try {
+        //         dl.children[0] = null;
+        //     }
+        //     catch{
+        //         dl.children[0].remove();
+        //     }
+        // }
         options.forEach(function (x) {
             var opt = document.createElement('option');
             var name = x.getName();
@@ -507,6 +524,7 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
     }
     function prefillCoptersSelect(copters) {
         while (copterSelect.children.length > 0) {
+            console.log("prefillCoptersSelect");
             copterSelect.removeChild(copterSelect.children[0]);
         }
         copters.forEach(function (x) {
@@ -550,6 +568,7 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
     }
     function prefillCountrySelect(airports) {
         while (selectCountry.children.length > 0) {
+            console.log("prefillCountrySelect");
             selectCountry.removeChild(selectCountry.children[0]);
         }
         var allOption = document.createElement('option');

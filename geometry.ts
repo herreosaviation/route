@@ -1,27 +1,27 @@
 export interface Geometry {
     results: Result[];
-    status:  string;
+    status: string;
 }
 
 export interface Result {
     address_components: AddressComponent[];
-    formatted_address:  string;
-    geometry:           GeometryClass;
-    place_id:           string;
-    types:              string[];
+    formatted_address: string;
+    geometry: GeometryClass;
+    place_id: string;
+    types: string[];
 }
 
 export interface AddressComponent {
-    long_name:  string;
+    long_name: string;
     short_name: string;
-    types:      string[];
+    types: string[];
 }
 
 export interface GeometryClass {
-    bounds:        Bounds;
-    location:      Location;
+    bounds: Bounds;
+    location: Location;
     location_type: string;
-    viewport:      Bounds;
+    viewport: Bounds;
 }
 
 export interface Bounds {
@@ -81,7 +81,7 @@ function transform(val: any, typ: any, getProps: any): any {
             var typ = typs[i];
             try {
                 return transform(val, typ, getProps);
-            } catch (_) {}
+            } catch (_) { }
         }
         return invalidValue(typs, val);
     }
@@ -133,14 +133,15 @@ function transform(val: any, typ: any, getProps: any): any {
     }
     if (typ === false) return invalidValue(typ, val);
     while (typeof typ === "object" && typ.ref !== undefined) {
+        console.log("geometry");
         typ = typeMap[typ.ref];
     }
     if (Array.isArray(typ)) return transformEnum(typ, val);
     if (typeof typ === "object") {
         return typ.hasOwnProperty("unionMembers") ? transformUnion(typ.unionMembers, val)
-            : typ.hasOwnProperty("arrayItems")    ? transformArray(typ.arrayItems, val)
-            : typ.hasOwnProperty("props")         ? transformObject(getProps(typ), typ.additional, val)
-            : invalidValue(typ, val);
+            : typ.hasOwnProperty("arrayItems") ? transformArray(typ.arrayItems, val)
+                : typ.hasOwnProperty("props") ? transformObject(getProps(typ), typ.additional, val)
+                    : invalidValue(typ, val);
     }
     // Numbers can be parsed by Date but shouldn't be.
     if (typ === Date && typeof val !== "number") return transformDate(typ, val);

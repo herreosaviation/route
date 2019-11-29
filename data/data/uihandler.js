@@ -91,7 +91,7 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
             if (session.getCurrentRoute().length > 1) {
                 var image = document.getElementById("mapimg");
                 bla(document.getElementById("map"), {
-                    useCORS: true,
+                    useCORS: true
                 }).then(canvas => {
                     var img = canvas.toDataURL("image/png");
                     var listened = () => {

@@ -143,7 +143,6 @@ export function initilizeUI() {
         }
 
         sendMail();
-
     });
 
     inputPrint.addEventListener('click', () => {
@@ -202,6 +201,14 @@ export function initilizeUI() {
     if (copters.length > 0) {
         session.setCurrentCopter(copters[0]);
     }
+
+    if (isIE()) {
+        debugger;
+        tabButton2.style.display = "none";
+        dropdownNearby.type = "hidden";
+        alert("Ihr Internetbrowser wird nicht vollständig unterstzützt. Um alle Features dieser Anwendung nutzen zu können, wechseln sie bitte auf einen aktuellen Browser.");
+    }
+
     redrawView();
 }
 
@@ -517,14 +524,16 @@ function getDataListForInputElement(sender: HTMLInputElement): HTMLDataListEleme
 }
 
 function updateAddressDataList(dl: HTMLDataListElement, options: google.maps.GeocoderResult[], initial: string) {
-    while (dl.children.length != 0) {
-        if (isIE()) {
-            dl.children[0] = null;
-        }
-        else {
-            dl.children[0].remove();
-        }
-    }
+    dl.innerHTML = "";
+    // while (dl.children.length != 0) {
+    //     console.log("try to remove stuff");
+    //     if (isIE()) {
+    //         dl.children[0] = null;
+    //     }
+    //     else {
+    //         dl.children[0].remove();
+    //     }
+    // }
     options.forEach(x => {
         var opt = <HTMLOptionElement>document.createElement('option');
         opt.value = x.formatted_address;
@@ -536,9 +545,18 @@ function updateAddressDataList(dl: HTMLDataListElement, options: google.maps.Geo
 }
 
 function updateAirportDataList(dl: HTMLDataListElement, options: Airport[]) {
-    while (dl.children.length != 0) {
-        dl.children[0] = null;
-    }
+    console.log("should remove " + dl.children.length + " items");
+    console.log(options.length);
+    dl.innerHTML = "";
+    // while (dl.children.length != 0) {
+    //     console.log("removed...")
+    //     try {
+    //         dl.children[0] = null;
+    //     }
+    //     catch{
+    //         dl.children[0].remove();
+    //     }
+    // }
     options.forEach(x => {
         var opt = <HTMLOptionElement>document.createElement('option');
         var name = x.getName();
@@ -596,6 +614,7 @@ function changeTabContent(event: MouseEvent, to: String) {
 
 function prefillCoptersSelect(copters: Copter[]) {
     while (copterSelect.children.length > 0) {
+        console.log("prefillCoptersSelect")
         copterSelect.removeChild(copterSelect.children[0]);
     }
 
@@ -649,6 +668,8 @@ function createStopElement(): StopGroup {
 
 function prefillCountrySelect(airports: Airport[]) {
     while (selectCountry.children.length > 0) {
+        console.log("prefillCountrySelect")
+
         selectCountry.removeChild(selectCountry.children[0]);
     }
 

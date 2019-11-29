@@ -1,4 +1,6 @@
 #routeSelectionBackground {
+    max-height: 100%;
+    overflow: auto;
     box-sizing: border-box;
     z-index: 99;
     padding: 12px 20px 30px 12px;
