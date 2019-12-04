@@ -192,7 +192,12 @@ export function initilizeUI() {
         debugger;
         tabButton2.style.display = "none";
         dropdownNearby.type = "hidden";
-        alert("Ihr Internetbrowser wird nicht vollständig unterstzützt. Um alle Features dieser Anwendung nutzen zu können, wechseln sie bitte auf einen aktuellen Browser.");
+        if (getLanguage() == Language.de) {
+            alert("Ihr Internetbrowser wird nicht vollständig unterstzützt. Um alle Features dieser Anwendung nutzen zu können, wechseln sie bitte auf einen aktuellen Browser.");
+        }
+        else {
+            alert("Your browser is not fully supported. To use all features of this application please use a current browser.")
+        }
     }
 
     redrawView();
@@ -283,14 +288,16 @@ function redrawView() {
             url += "|enc:" + google.maps.geometry.encoding.encodePath(x.copterDirections);
 
             url += "&markers=";
-            mapHandler.currentMarkers.forEach(marker => {
-                var pos = marker.getPosition();
+
+
+            var currentRoute = session.getCurrentRoute();
+            session.getCurrentRoute().forEach(element => {
+                var pos = element.getLatLng();
                 url += pos.lat() + "," + pos.lng();
-                if (marker = mapHandler.currentMarkers[mapHandler.currentMarkers.length - 1]) {
+                if (element = currentRoute[currentRoute.length - 1]) {
                     url += "|";
                 }
             });
-
 
             url += "&key=" + globals.apiKey;
             var image = <HTMLImageElement>document.getElementById("mapimg")
