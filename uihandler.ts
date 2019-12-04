@@ -8,6 +8,7 @@ import * as session from './session';
 import { plainCountries } from "./convertcsv";
 import * as bla from 'html2canvas';
 import { Language, getText, Texts, setAppLanguage, language } from "./texts";
+import { globals } from "./globals";
 // import * as html2canvas from "html2canvas";
 
 class StopGroup {
@@ -147,22 +148,7 @@ export function initilizeUI() {
 
     inputPrint.addEventListener('click', () => {
         if (session.getCurrentRoute().length > 1) {
-            var image = <HTMLImageElement>document.getElementById("mapimg");
-            bla(document.getElementById("map"), {
-                useCORS: true,
-            }).then(canvas => {
-                var img = canvas.toDataURL("image/png");
-                var listened = () => {
-                    window.print();
-                    image.removeEventListener("load", listened);
-                };
-                image.addEventListener("load", listened);
-                image.src = img;
-                // var url = canvas.toDataURL("image/jpeg");
-
-                // img.src = url;
-            });
-
+            window.print();
         }
         else {
             alert("Keine Route zum Drucken ausgewählt");
@@ -279,6 +265,14 @@ function redrawView() {
 
             var wrapper = document.getElementById("wrapper");
             wrapper.appendChild(x.table);
+
+            var url = "https://maps.googleapis.com/maps/api/staticmap?size=600x400&path=enc:";
+            url += x.carDirectionResult.routes[0].overview_polyline;
+            url += "&path=enc:" + google.maps.geometry.encoding.encodePath(x.copterDirections);
+            url += "&key=" + globals.apiKey;
+            var image = <HTMLImageElement>document.getElementById("mapimg")
+            image.src = url;
+
         }, () => {
             alert(getText(Texts.routeError));
         });

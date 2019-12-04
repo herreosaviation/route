@@ -2,7 +2,7 @@
     "compilerOptions": {
         "module": "amd",
         // "outFile": "build/main.js",
-        "outDir": "data",
+        "outDir": "./data",
         // "sourceMap": false,
         "sourceMap": true,
         "target": "es5",
@@ -10,7 +10,7 @@
     },
     "exclude": [
         "node_modules",
-        "data"
+        "./data"
     ],
     "include": [
         "./**/*"

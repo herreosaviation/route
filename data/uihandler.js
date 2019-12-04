@@ -1,4 +1,4 @@
-define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights", "./mapHandler", "./requestHandler", "./ResultHandler", "./session", "./convertcsv", "html2canvas", "./texts"], function (require, exports, ActiveRouteSelection_1, copter_1, flights_1, mapHandler, requestHandler_1, ResultHandler_1, session, convertcsv_1, bla, texts_1) {
+define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights", "./mapHandler", "./requestHandler", "./ResultHandler", "./session", "./convertcsv", "./texts", "./globals"], function (require, exports, ActiveRouteSelection_1, copter_1, flights_1, mapHandler, requestHandler_1, ResultHandler_1, session, convertcsv_1, texts_1, globals_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     // import * as html2canvas from "html2canvas";
@@ -117,20 +117,7 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
         });
         inputPrint.addEventListener('click', function () {
             if (session.getCurrentRoute().length > 1) {
-                var image = document.getElementById("mapimg");
-                bla(document.getElementById("map"), {
-                    useCORS: true,
-                }).then(function (canvas) {
-                    var img = canvas.toDataURL("image/png");
-                    var listened = function () {
-                        window.print();
-                        image.removeEventListener("load", listened);
-                    };
-                    image.addEventListener("load", listened);
-                    image.src = img;
-                    // var url = canvas.toDataURL("image/jpeg");
-                    // img.src = url;
-                });
+                window.print();
             }
             else {
                 alert("Keine Route zum Drucken ausgewählt");
@@ -233,6 +220,12 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
                 }
                 var wrapper = document.getElementById("wrapper");
                 wrapper.appendChild(x.table);
+                var url = "https://maps.googleapis.com/maps/api/staticmap?size=600x400&path=enc:";
+                url += x.carDirectionResult.routes[0].overview_polyline;
+                url += "&path=enc:" + google.maps.geometry.encoding.encodePath(x.copterDirections);
+                url += "&key=" + globals_1.globals.apiKey;
+                var image = document.getElementById("mapimg");
+                image.src = url;
             }, function () {
                 alert(texts_1.getText(texts_1.Texts.routeError));
             });
