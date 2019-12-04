@@ -1,4 +1,4 @@
-define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights", "./mapHandler", "./requestHandler", "./ResultHandler", "./session", "./convertcsv", "html2canvas", "./texts"], function (require, exports, ActiveRouteSelection_1, copter_1, flights_1, mapHandler, requestHandler_1, ResultHandler_1, session, convertcsv_1, bla, texts_1) {
+define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights", "./mapHandler", "./requestHandler", "./ResultHandler", "./session", "./convertcsv", "./texts", "./globals"], function (require, exports, ActiveRouteSelection_1, copter_1, flights_1, mapHandler, requestHandler_1, ResultHandler_1, session, convertcsv_1, texts_1, globals_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     // import * as html2canvas from "html2canvas";
@@ -117,20 +117,7 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
         });
         inputPrint.addEventListener('click', function () {
             if (session.getCurrentRoute().length > 1) {
-                var image = document.getElementById("mapimg");
-                bla(document.getElementById("map"), {
-                    useCORS: true,
-                }).then(function (canvas) {
-                    var img = canvas.toDataURL("image/png");
-                    var listened = function () {
-                        window.print();
-                        image.removeEventListener("load", listened);
-                    };
-                    image.addEventListener("load", listened);
-                    image.src = img;
-                    // var url = canvas.toDataURL("image/jpeg");
-                    // img.src = url;
-                });
+                window.print();
             }
             else {
                 alert("Keine Route zum Drucken ausgewählt");
@@ -161,6 +148,12 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
         prefillCountrySelect(flights_1.data);
         if (copter_1.copters.length > 0) {
             session.setCurrentCopter(copter_1.copters[0]);
+        }
+        if (isIE()) {
+            debugger;
+            tabButton2.style.display = "none";
+            dropdownNearby.type = "hidden";
+            alert("Ihr Internetbrowser wird nicht vollständig unterstzützt. Um alle Features dieser Anwendung nutzen zu können, wechseln sie bitte auf einen aktuellen Browser.");
         }
         redrawView();
     }
@@ -226,7 +219,33 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
                     tbl.parentNode.removeChild(tbl);
                 }
                 var wrapper = document.getElementById("wrapper");
-                wrapper.appendChild(x.table);
+                wrapper.insertBefore(x.table, document.getElementById("mapimg"));
+                var url = "https://maps.googleapis.com/maps/api/staticmap?size=600x400";
+                url += "&language=";
+                if (getLanguage() == texts_1.Language.de) {
+                    url += "de";
+                }
+                else {
+                    url += "en";
+                }
+                url += "&path=enc:";
+                url += x.carDirectionResult.routes[0].overview_polyline;
+                url += "&path=";
+                url += "color:" + "FF0000";
+                url += "|weight:" + "2";
+                url += "|geodesic:true";
+                url += "|enc:" + google.maps.geometry.encoding.encodePath(x.copterDirections);
+                url += "&markers=";
+                mapHandler.currentMarkers.forEach(function (marker) {
+                    var pos = marker.getPosition();
+                    url += pos.lat() + "," + pos.lng();
+                    if (marker = mapHandler.currentMarkers[mapHandler.currentMarkers.length - 1]) {
+                        url += "|";
+                    }
+                });
+                url += "&key=" + globals_1.globals.apiKey;
+                var image = document.getElementById("mapimg");
+                image.src = url;
             }, function () {
                 alert(texts_1.getText(texts_1.Texts.routeError));
             });
@@ -439,9 +458,16 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
         }
     }
     function updateAddressDataList(dl, options, initial) {
-        while (dl.children.length != 0) {
-            dl.children[0] = null;
-        }
+        dl.innerHTML = "";
+        // while (dl.children.length != 0) {
+        //     console.log("try to remove stuff");
+        //     if (isIE()) {
+        //         dl.children[0] = null;
+        //     }
+        //     else {
+        //         dl.children[0].remove();
+        //     }
+        // }
         options.forEach(function (x) {
             var opt = document.createElement('option');
             opt.value = x.formatted_address;
@@ -452,9 +478,18 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
         console.log(dl.children.length);
     }
     function updateAirportDataList(dl, options) {
-        while (dl.children.length != 0) {
-            dl.children[0] = null;
-        }
+        console.log("should remove " + dl.children.length + " items");
+        console.log(options.length);
+        dl.innerHTML = "";
+        // while (dl.children.length != 0) {
+        //     console.log("removed...")
+        //     try {
+        //         dl.children[0] = null;
+        //     }
+        //     catch{
+        //         dl.children[0].remove();
+        //     }
+        // }
         options.forEach(function (x) {
             var opt = document.createElement('option');
             var name = x.getName();
@@ -502,6 +537,7 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
     }
     function prefillCoptersSelect(copters) {
         while (copterSelect.children.length > 0) {
+            console.log("prefillCoptersSelect");
             copterSelect.removeChild(copterSelect.children[0]);
         }
         copters.forEach(function (x) {
@@ -545,6 +581,7 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
     }
     function prefillCountrySelect(airports) {
         while (selectCountry.children.length > 0) {
+            console.log("prefillCountrySelect");
             selectCountry.removeChild(selectCountry.children[0]);
         }
         var allOption = document.createElement('option');
@@ -626,6 +663,17 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
             return casted;
         }
         return texts_1.Language.de;
+    }
+    function isIE() {
+        var ua = window.navigator.userAgent;
+        var msie = ua.indexOf("MSIE ");
+        if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+        return false;
     }
 });
 //# sourceMappingURL=uihandler.js.map

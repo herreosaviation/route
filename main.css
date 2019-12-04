@@ -1,4 +1,6 @@
 #routeSelectionBackground {
+    max-height: 100%;
+    overflow: auto;
     box-sizing: border-box;
     z-index: 99;
     padding: 12px 20px 30px 12px;
@@ -261,7 +263,7 @@ screen and (max-width:640px) {
     }
 
     #RouteResultTable {
-        font-size: 10px;
+        font-size: 12px;
     }    
 
     #buttonContinue{
@@ -280,6 +282,11 @@ screen and (max-width:640px) {
     height: 0px;
 }
 
+#mapimg{
+    margin: auto;
+    width: 90%;
+}
+
 /* #endregion */
 @media print {
     .noprint {
@@ -293,17 +300,16 @@ screen and (max-width:640px) {
     }
 
     .printOnly{
-        display: unset;
+        display: block;
         height: auto;
     }
 
     #mapimg{
-        /* height: 200px;
-        width: 600px; */
+        /* top: 50%;
         height: 40%;
-        width: 100%;
-        object-fit: scale-down;
-        line-break: auto;
+        width: 100%; */
+        /* object-fit: scale-down;
+        line-break: auto; */
     }
 
     #RouteResultTable{
@@ -315,6 +321,8 @@ screen and (max-width:640px) {
     #routeSelectionBackground {
         width: 100%;
         position: unset;
+        top: unset;
+        left: unset;
         z-index: unset;
         color: black;
         background-color: unset;

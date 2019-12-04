@@ -21,6 +21,10 @@ export function searchForLocation(location: string, success: (response: google.m
                 results.pop();
             }
             console.log(getCountry(results[0].address_components));
+            while (results.length > 1) {
+                console.log("popped");
+                results.pop();
+            }
             success(results);
         }
         else {

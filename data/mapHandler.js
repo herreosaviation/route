@@ -7,7 +7,7 @@ define(["require", "exports", "./globals", "./flights", "./mapstyle"], function 
     exports.setFullMapAction = setFullMapAction;
     var fullMapAction = null;
     var url = globals_1.globals.mapsUrl + "key=" + globals_1.globals.apiKey + "&" + "v=3";
-    var currentMarkers = [];
+    exports.currentMarkers = [];
     var currentCopterPolyLines = [];
     var currentDirections = [];
     function GetNearbyAirports(lat, lng, distance) {
@@ -88,7 +88,7 @@ define(["require", "exports", "./globals", "./flights", "./mapstyle"], function 
     exports.drawCopterRoute = drawCopterRoute;
     function drawMarkers(markers, markerSelected) {
         markers.forEach(function (x) {
-            currentMarkers.push(x.marker);
+            exports.currentMarkers.push(x.marker);
             x.marker.setMap(exports.map);
             x.marker.addListener('click', function (event) {
                 markerSelected(x);
@@ -97,10 +97,10 @@ define(["require", "exports", "./globals", "./flights", "./mapstyle"], function 
     }
     exports.drawMarkers = drawMarkers;
     function removeAllMarkers() {
-        currentMarkers.forEach(function (x) {
+        exports.currentMarkers.forEach(function (x) {
             x.setMap(null);
         });
-        currentMarkers = [];
+        exports.currentMarkers = [];
     }
     exports.removeAllMarkers = removeAllMarkers;
     function drawCircle(location, radius) {

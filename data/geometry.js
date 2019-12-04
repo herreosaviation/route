@@ -100,6 +100,7 @@ define(["require", "exports"], function (require, exports) {
         if (typ === false)
             return invalidValue(typ, val);
         while (typeof typ === "object" && typ.ref !== undefined) {
+            console.log("geometry");
             typ = typeMap[typ.ref];
         }
         if (Array.isArray(typ))

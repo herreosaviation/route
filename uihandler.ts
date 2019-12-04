@@ -8,6 +8,7 @@ import * as session from './session';
 import { plainCountries } from "./convertcsv";
 import * as bla from 'html2canvas';
 import { Language, getText, Texts, setAppLanguage, language } from "./texts";
+import { globals } from "./globals";
 // import * as html2canvas from "html2canvas";
 
 class StopGroup {
@@ -143,27 +144,11 @@ export function initilizeUI() {
         }
 
         sendMail();
-
     });
 
     inputPrint.addEventListener('click', () => {
         if (session.getCurrentRoute().length > 1) {
-            var image = <HTMLImageElement>document.getElementById("mapimg");
-            bla(document.getElementById("map"), {
-                useCORS: true,
-            }).then(canvas => {
-                var img = canvas.toDataURL("image/png");
-                var listened = () => {
-                    window.print();
-                    image.removeEventListener("load", listened);
-                };
-                image.addEventListener("load", listened);
-                image.src = img;
-                // var url = canvas.toDataURL("image/jpeg");
-
-                // img.src = url;
-            });
-
+            window.print();
         }
         else {
             alert("Keine Route zum Drucken ausgewählt");
@@ -202,6 +187,14 @@ export function initilizeUI() {
     if (copters.length > 0) {
         session.setCurrentCopter(copters[0]);
     }
+
+    if (isIE()) {
+        debugger;
+        tabButton2.style.display = "none";
+        dropdownNearby.type = "hidden";
+        alert("Ihr Internetbrowser wird nicht vollständig unterstzützt. Um alle Features dieser Anwendung nutzen zu können, wechseln sie bitte auf einen aktuellen Browser.");
+    }
+
     redrawView();
 }
 
@@ -271,7 +264,38 @@ function redrawView() {
             }
 
             var wrapper = document.getElementById("wrapper");
-            wrapper.appendChild(x.table);
+            wrapper.insertBefore(x.table, document.getElementById("mapimg"));
+
+            var url = "https://maps.googleapis.com/maps/api/staticmap?size=600x400";
+            url += "&language=";
+            if (getLanguage() == Language.de) {
+                url += "de";
+            }
+            else {
+                url += "en";
+            }
+            url += "&path=enc:"
+            url += x.carDirectionResult.routes[0].overview_polyline;
+            url += "&path=";
+            url += "color:" + "FF0000";
+            url += "|weight:" + "2";
+            url += "|geodesic:true";
+            url += "|enc:" + google.maps.geometry.encoding.encodePath(x.copterDirections);
+
+            url += "&markers=";
+            mapHandler.currentMarkers.forEach(marker => {
+                var pos = marker.getPosition();
+                url += pos.lat() + "," + pos.lng();
+                if (marker = mapHandler.currentMarkers[mapHandler.currentMarkers.length - 1]) {
+                    url += "|";
+                }
+            });
+
+
+            url += "&key=" + globals.apiKey;
+            var image = <HTMLImageElement>document.getElementById("mapimg")
+            image.src = url;
+
         }, () => {
             alert(getText(Texts.routeError));
         });
@@ -517,9 +541,16 @@ function getDataListForInputElement(sender: HTMLInputElement): HTMLDataListEleme
 }
 
 function updateAddressDataList(dl: HTMLDataListElement, options: google.maps.GeocoderResult[], initial: string) {
-    while (dl.children.length != 0) {
-        dl.children[0] = null;
-    }
+    dl.innerHTML = "";
+    // while (dl.children.length != 0) {
+    //     console.log("try to remove stuff");
+    //     if (isIE()) {
+    //         dl.children[0] = null;
+    //     }
+    //     else {
+    //         dl.children[0].remove();
+    //     }
+    // }
     options.forEach(x => {
         var opt = <HTMLOptionElement>document.createElement('option');
         opt.value = x.formatted_address;
@@ -531,9 +562,18 @@ function updateAddressDataList(dl: HTMLDataListElement, options: google.maps.Geo
 }
 
 function updateAirportDataList(dl: HTMLDataListElement, options: Airport[]) {
-    while (dl.children.length != 0) {
-        dl.children[0] = null;
-    }
+    console.log("should remove " + dl.children.length + " items");
+    console.log(options.length);
+    dl.innerHTML = "";
+    // while (dl.children.length != 0) {
+    //     console.log("removed...")
+    //     try {
+    //         dl.children[0] = null;
+    //     }
+    //     catch{
+    //         dl.children[0].remove();
+    //     }
+    // }
     options.forEach(x => {
         var opt = <HTMLOptionElement>document.createElement('option');
         var name = x.getName();
@@ -591,6 +631,7 @@ function changeTabContent(event: MouseEvent, to: String) {
 
 function prefillCoptersSelect(copters: Copter[]) {
     while (copterSelect.children.length > 0) {
+        console.log("prefillCoptersSelect")
         copterSelect.removeChild(copterSelect.children[0]);
     }
 
@@ -644,6 +685,8 @@ function createStopElement(): StopGroup {
 
 function prefillCountrySelect(airports: Airport[]) {
     while (selectCountry.children.length > 0) {
+        console.log("prefillCountrySelect")
+
         selectCountry.removeChild(selectCountry.children[0]);
     }
 
@@ -740,4 +783,18 @@ function getLanguage(): Language {
     }
 
     return Language.de;
+}
+
+function isIE(): boolean {
+    var ua = window.navigator.userAgent;
+    var msie = ua.indexOf("MSIE ");
+
+    if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
+        return true;
+    }
+    else {
+        return false;
+    }
+
+    return false;
 }

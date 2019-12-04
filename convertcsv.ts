@@ -199,7 +199,7 @@ export var plainCountries = [
     "code": "XK",
     "name": "Kosovo",
   }
- ];
+];
 
 export var plaindata = [{
   "t": "heliport",
@@ -22647,7 +22647,7 @@ export var plaindata = [{
   "la": 52.189661,
   "lo": -2.177204,
   "cn": "GB"
-},   {
+}, {
   "t": "small_airport",
   "n": "aslamkhanji",
   "la": 0,
