@@ -264,11 +264,34 @@ function redrawView() {
             }
 
             var wrapper = document.getElementById("wrapper");
-            wrapper.appendChild(x.table);
+            wrapper.insertBefore(x.table, document.getElementById("mapimg"));
 
-            var url = "https://maps.googleapis.com/maps/api/staticmap?size=600x400&path=enc:";
+            var url = "https://maps.googleapis.com/maps/api/staticmap?size=600x400";
+            url += "&language=";
+            if (getLanguage() == Language.de) {
+                url += "de";
+            }
+            else {
+                url += "en";
+            }
+            url += "&path=enc:"
             url += x.carDirectionResult.routes[0].overview_polyline;
-            url += "&path=enc:" + google.maps.geometry.encoding.encodePath(x.copterDirections);
+            url += "&path=";
+            url += "color:" + "FF0000";
+            url += "|weight:" + "2";
+            url += "|geodesic:true";
+            url += "|enc:" + google.maps.geometry.encoding.encodePath(x.copterDirections);
+
+            url += "&markers=";
+            mapHandler.currentMarkers.forEach(marker => {
+                var pos = marker.getPosition();
+                url += pos.lat() + "," + pos.lng();
+                if (marker = mapHandler.currentMarkers[mapHandler.currentMarkers.length - 1]) {
+                    url += "|";
+                }
+            });
+
+
             url += "&key=" + globals.apiKey;
             var image = <HTMLImageElement>document.getElementById("mapimg")
             image.src = url;

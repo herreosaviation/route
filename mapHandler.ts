@@ -13,7 +13,7 @@ var fullMapAction: ((map: google.maps.Map) => void) = null;
 
 var url = globals.mapsUrl + "key=" + globals.apiKey + "&" + "v=3";
 
-var currentMarkers: google.maps.Marker[] = [];
+export var currentMarkers: google.maps.Marker[] = [];
 var currentCopterPolyLines: google.maps.Polyline[] = [];
 var currentDirections: google.maps.DirectionsRenderer[] = [];
 
