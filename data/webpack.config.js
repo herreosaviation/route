@@ -3,7 +3,7 @@ module.exports = {
     entry: "./main.ts",
     module: {
         rules: [{
-                use: 'ts-loade',
+                use: 'ts-loader',
                 exclude: /node_modules/
             }]
     },
@@ -17,3 +17,4 @@ module.exports = {
         path: path.resolve(__dirname, 'dist')
     }
 };
+//# sourceMappingURL=webpack.config.js.map

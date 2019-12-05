@@ -42,12 +42,14 @@ define(["require", "exports"], function (require, exports) {
         Texts[Texts["selectorSelectTitleCountry"] = 30] = "selectorSelectTitleCountry";
         Texts[Texts["selectorSelectCountry"] = 31] = "selectorSelectCountry";
         Texts[Texts["routeError"] = 32] = "routeError";
-        Texts[Texts["mailSubject"] = 33] = "mailSubject";
-        Texts[Texts["mailHeader"] = 34] = "mailHeader";
-        Texts[Texts["mailStart"] = 35] = "mailStart";
-        Texts[Texts["mailStop"] = 36] = "mailStop";
-        Texts[Texts["mailDestination"] = 37] = "mailDestination";
-        Texts[Texts["hhmmend"] = 38] = "hhmmend";
+        Texts[Texts["noPrintRouteError"] = 33] = "noPrintRouteError";
+        Texts[Texts["browserNotSupportedError"] = 34] = "browserNotSupportedError";
+        Texts[Texts["mailSubject"] = 35] = "mailSubject";
+        Texts[Texts["mailHeader"] = 36] = "mailHeader";
+        Texts[Texts["mailStart"] = 37] = "mailStart";
+        Texts[Texts["mailStop"] = 38] = "mailStop";
+        Texts[Texts["mailDestination"] = 39] = "mailDestination";
+        Texts[Texts["hhmmend"] = 40] = "hhmmend";
     })(Texts = exports.Texts || (exports.Texts = {}));
     function setAppLanguage(lang) {
         exports.language = lang;
@@ -144,19 +146,25 @@ define(["require", "exports"], function (require, exports) {
                 return isde ? "Alle" : "All";
             case Texts.routeError:
                 return isde ? "Route konnte nicht berechnet werden." : "Could not calculate route.";
+            case Texts.noPrintRouteError:
+                return isde ? "Keine Route zum Drucken ausgewählt" : "No route to print selected.";
+            case Texts.browserNotSupportedError:
+                return isde ? "Ihr Internetbrowser wird nicht vollständig unterstzützt. Um alle Features dieser Anwendung nutzen zu können, wechseln Sie bitte auf einen aktuellen Browser."
+                    : "Your browser is not fully supported. To use all features of this application please use a current browser.";
             case Texts.mailSubject:
                 return isde ? "Anfrage" : "";
             case Texts.mailHeader:
-                return isde ? "Hallo, ich hätte gerne weiter Informationen." : "";
+                return isde ? "Hallo,\n\nich h\u00E4tte gerne weitere Informationen.\n" : "Hello,\n\nI'd like to recieve more information.\n";
             case Texts.mailStart:
-                return isde ? "Start" : "";
+                return isde ? "Start-Ort" : "Place of Departure";
             case Texts.mailStop:
-                return isde ? "Zwischenstopp " + ((index != null && index > 0 ? index : "")) : "";
+                return isde ? "Zwischenstopp " + ((index != null && index > 0 ? index : "")) : "Intermediate Stop " + ((index != null && index > 0 ? index : ""));
             case Texts.mailDestination:
-                return isde ? "Ziel" : "";
+                return isde ? "Ziel" : "Destination";
             case Texts.hhmmend:
                 return isde ? "Std." : "Hrs.";
         }
     }
     exports.getText = getText;
 });
+//# sourceMappingURL=texts.js.map

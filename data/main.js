@@ -26,3 +26,4 @@ define(["require", "exports", "./uihandler", "./mapHandler", "./texts", "./times
         return km.toFixed(1) + " km";
     };
 });
+//# sourceMappingURL=main.js.map

@@ -116,6 +116,8 @@ define(["require", "exports", "./globals", "./flights", "./mapstyle"], function 
     function setCenter(location, offsetX, offsetY) {
         if (offsetX === void 0) { offsetX = null; }
         if (offsetY === void 0) { offsetY = null; }
+        exports.map.setCenter(location);
+        return;
         if (offsetX == null) {
             offsetX = 0;
         }
@@ -186,3 +188,4 @@ define(["require", "exports", "./globals", "./flights", "./mapstyle"], function 
         return deg * (Math.PI / 180);
     }
 });
+//# sourceMappingURL=mapHandler.js.map

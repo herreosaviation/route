@@ -57,3 +57,4 @@ define(["require", "exports", "./convertcsv"], function (require, exports, conve
         return new Country(x["code"], x["name"]);
     });
 });
+//# sourceMappingURL=flights.js.map

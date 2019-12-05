@@ -132,6 +132,9 @@ export function drawCircle(location: google.maps.LatLng, radius: number): google
 
 export function setCenter(location: google.maps.LatLng, offsetX: number = null, offsetY: number = null) {
 
+
+    map.setCenter(location);
+    return;
     if (offsetX == null) {
         offsetX = 0;
     }

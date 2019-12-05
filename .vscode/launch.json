@@ -5,10 +5,10 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Launch index.html",
+            "name": "Launch indexdebug.html",
             "type": "chrome",
             "request": "launch",
-            "file": "${workspaceFolder}/index.html?ln=de"
+            "file": "${workspaceFolder}/indexdebug.html?ln=de"
         }
     ]
 }

@@ -119,3 +119,4 @@ define(["require", "exports", "./mapHandler", "./texts", "./timespan"], function
         return mapHandler.getDistanceFromLatLonInKm(start.lat(), start.lng(), end.lat(), end.lng());
     }
 });
+//# sourceMappingURL=ResultHandler.js.map

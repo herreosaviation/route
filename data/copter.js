@@ -16,3 +16,4 @@ define(["require", "exports"], function (require, exports) {
         new Copter("Agusta AW109SP", "AW109SP", 270, 2.5, 250)
     ];
 });
+//# sourceMappingURL=copter.js.map

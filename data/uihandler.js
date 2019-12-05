@@ -100,6 +100,7 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
                     mailBody += nl;
                     mailBody += x.getLatLng();
                 }
+                mailBody += nl;
             });
             var mailSubject = texts_1.getText(texts_1.Texts.mailSubject);
             if (session.currentCopter != null) {
@@ -119,7 +120,7 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
                 window.print();
             }
             else {
-                alert("Keine Route zum Drucken ausgewählt");
+                alert(texts_1.getText(texts_1.Texts.noPrintRouteError));
             }
         });
         inputCall.addEventListener('click', function () {
@@ -151,12 +152,7 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
         if (isIE()) {
             tabButton2.style.display = "none";
             dropdownNearby.type = "hidden";
-            if (getLanguage() == texts_1.Language.de) {
-                alert("Ihr Internetbrowser wird nicht vollständig unterstzützt. Um alle Features dieser Anwendung nutzen zu können, wechseln Sie bitte auf einen aktuellen Browser.");
-            }
-            else {
-                alert("Your browser is not fully supported. To use all features of this application please use a current browser.");
-            }
+            alert(texts_1.getText(texts_1.Texts.browserNotSupportedError));
         }
         redrawView();
     }
@@ -680,3 +676,4 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
         return false;
     }
 });
+//# sourceMappingURL=uihandler.js.map

@@ -3,8 +3,8 @@
         "module": "amd",
         // "outFile": "build/main.js",
         "outDir": "./data",
-        "sourceMap": false,
-        // "sourceMap": true,
+        // "sourceMap": false,
+        "sourceMap": true,
         "target": "es5",
         "allowJs": true
     },

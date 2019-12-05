@@ -38,6 +38,8 @@ export enum Texts {
     selectorSelectTitleCountry,
     selectorSelectCountry,
     routeError,
+    noPrintRouteError,
+    browserNotSupportedError,
     mailSubject,
     mailHeader,
     mailStart,
@@ -95,7 +97,8 @@ export function getText(type: Texts, index: number = null): string {
             return isde ? "Die angegebenen Werte sind Richtwerte. Abweichungen beispielsweise aufgrund der aktuellen Wetterlage können auftreten."
                 : "The displayed values are standard values. Discrepancies may arise, for example due to current weather conditions.";
         case Texts.tableNeededStopsInfo:
-            if (index == null || index == 0) return "";
+            if (index == null || index == 0)
+                return "";
             else {
                 if (isde) {
                     if (index == 1) {
@@ -139,16 +142,27 @@ export function getText(type: Texts, index: number = null): string {
             return isde ? "Alle" : "All";
         case Texts.routeError:
             return isde ? "Route konnte nicht berechnet werden." : "Could not calculate route.";
+        case Texts.noPrintRouteError:
+            return isde ? "Keine Route zum Drucken ausgewählt" : "No route to print selected."
+        case Texts.browserNotSupportedError:
+            return isde ? "Ihr Internetbrowser wird nicht vollständig unterstzützt. Um alle Features dieser Anwendung nutzen zu können, wechseln Sie bitte auf einen aktuellen Browser."
+                : "Your browser is not fully supported. To use all features of this application please use a current browser."
         case Texts.mailSubject:
             return isde ? "Anfrage" : "";
         case Texts.mailHeader:
-            return isde ? "Hallo, ich hätte gerne weiter Informationen." : "";
+            return isde ? `Hallo,
+
+ich hätte gerne weitere Informationen.
+` : `Hello,
+
+I'd like to recieve more information.
+`;
         case Texts.mailStart:
-            return isde ? "Start" : "";
+            return isde ? "Start-Ort" : "Place of Departure";
         case Texts.mailStop:
-            return isde ? "Zwischenstopp " + ((index != null && index > 0 ? index : "")) : "";
+            return isde ? "Zwischenstopp " + ((index != null && index > 0 ? index : "")) : "Intermediate Stop " + ((index != null && index > 0 ? index : ""));
         case Texts.mailDestination:
-            return isde ? "Ziel" : "";
+            return isde ? "Ziel" : "Destination";
         case Texts.hhmmend:
             return isde ? "Std." : "Hrs.";
     }

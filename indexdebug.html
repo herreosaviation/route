@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head title="Herreos Routenplaner">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web:200,400" rel="stylesheet">
+    <link href="main.css" rel="stylesheet" type="text/css">
+    <script src="require.js" data-main="data/main.js" type="text/javascript"></script>
+</head>
+
+<body>
+    <div id="background">
+        <div id="routeSelectionBackground">
+            <div id="wrapper">
+                <a href="https://www.herreos.eu">
+                    <img id="imgLogo" class="noprint" src="assets/logo-light2x.png" />
+                    <img id="imgLogoDark" class="printOnly" src="assets/logo-dark.png" />
+                </a>
+
+                <div class="floatRight">
+                    <input id="inputCall" class="noprint topButton" type="image" src="assets/call.png" alt="Telefon">
+                    <input id="inputMail" class="noprint topButton" type="image" src="assets/mail.png" alt="Mail">
+                    <input id="inputPrint" class="noprint topButton" type="image" src="assets/print.png" alt="Drucken">
+                </div>
+                <div id="WrapperCopter" class="floatClear">
+                    <label id="copterSelectLabel" for="copterSelect" class="btn">Gewünschter Helikopter</label>
+                    <select id="copterSelect">
+                    </select>
+                </div>
+                <div id="selectionWrapper" class="noprint">
+                    <div id="wrapperStart">
+                        <h3 id="headerStart">START:</h3>
+                        <div id="selectedStart" class="btn">Kein Startpunkt ausgewählt</div>
+                        <button class="selectButton" id="buttonSelectStart">Start auswählen</button>
+                        <div id="routeSearchBackgroundDiv">
+                            <div class="tab">
+                                <button class="tablinks" id="tabButtonAddress">Aus Addresse wählen</button>
+                                <button class="tablinks" id="tabButtonAirport">Flugplatz wählen</button>
+                                <button class="tablinks" id="buttonCancelSearch">Abbrechen</button>
+                            </div>
+                            <div class="tabcontent noprint" id="addressTabContent">
+                                <input type="text" placeholder="Addresse, Postleitzahl oder Ort eingeben"
+                                    id="dropdownAddress" list="listAddress"></input>
+                                <datalist id="listAddress"></datalist>
+                                <input type="text" placeholder="(Optional) Flugplatz in der Nähe wählen"
+                                    id="dropdownNearby" list="listNearby"></input>
+                                <datalist id="listNearby"></datalist>
+                            </div>
+                            <div class="tabcontent noprint" id="airportTabContent">
+                                <label id="labelSelectCountry" for="selectCountry">Land auswählen</label>
+                                <select class="bright" id="selectCountry">
+                                </select>
+                                <input type="text" placeholder="Flugplatz auswählen" id="dropdownAirport"
+                                    list="listAirport"></input>
+                                <datalist id="listAirport"></datalist>
+                            </div>
+                            <button id="buttonContinue" class="selectButton">Auswahl übernehmen</button>
+                        </div>
+                    </div>
+                    <div id="wrapperStop">
+                        <h3 id="headerStop" class="clearFloat">ZWISCHENSTOPP:</h3>
+                        <div id="selectedStop" class="btn">Kein Zwischenstopp ausgewählt</div>
+                        <button class="selectButton" id="buttonSelectStop">Zwischenstopp
+                            auswählen</button>
+                        <button class="selectButton" disabled="true" id="clearStop">entfernen</button>
+                    </div>
+                    <div style="padding-top: 5px; padding-bottom: 5px;">
+                        <!-- <h3 style="clear: both">ZIEL:</h3> -->
+                        <div class="btn"></div>
+                        <button id="buttonAttachStop" class="selectButton">Weiteren Zwischenstopp hinzufügen</button>
+                    </div>
+                    <div id="wrapperEnd">
+                        <h3 id="destinationTitle" style="clear: both">ZIEL:</h3>
+                        <div id="selectedEnd" class="btn">Kein Ziel ausgewählt</div>
+                        <button class="selectButton" id="buttonSelectEnd">Ziel auswählen</button>
+                    </div>
+                </div>
+                <img id="mapimg" class="printOnly" />
+            </div>
+            <div style="height: 20px"></div>
+            <button class="selectButton noprint" style="width: 100%" id="ausblenden">Flugplaner Ausblenden </button>
+        </div>
+    </div>
+    <div id="map" class="noprint"></div>
+    <!-- <img id="mapimg" class="printOnly" /> -->
+</body>
+
+</html>

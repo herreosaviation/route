@@ -124,6 +124,8 @@ export function initilizeUI() {
                 mailBody += nl;
                 mailBody += x.getLatLng();
             }
+
+            mailBody += nl;
         });
 
         var mailSubject = getText(Texts.mailSubject);
@@ -149,7 +151,7 @@ export function initilizeUI() {
             window.print();
         }
         else {
-            alert("Keine Route zum Drucken ausgewählt");
+            alert(getText(Texts.noPrintRouteError));
         }
     });
 
@@ -189,12 +191,7 @@ export function initilizeUI() {
     if (isIE()) {
         tabButton2.style.display = "none";
         dropdownNearby.type = "hidden";
-        if (getLanguage() == Language.de) {
-            alert("Ihr Internetbrowser wird nicht vollständig unterstzützt. Um alle Features dieser Anwendung nutzen zu können, wechseln Sie bitte auf einen aktuellen Browser.");
-        }
-        else {
-            alert("Your browser is not fully supported. To use all features of this application please use a current browser.")
-        }
+        alert(getText(Texts.browserNotSupportedError));
     }
 
     redrawView();
