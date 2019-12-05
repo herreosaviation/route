@@ -172,4 +172,3 @@ define(["require", "exports"], function (require, exports) {
         }
     ];
 });
-//# sourceMappingURL=mapstyle.js.map

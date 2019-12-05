@@ -145,6 +145,11 @@ tr.border_bottom td {
     border-bottom:1pt solid white;
 }
 
+td.border_left {
+    border-left:1pt solid white;
+}
+
+
 select {
     font-family: 'Titillium Web', sans-serif;
     font-weight: 200;
@@ -289,13 +294,13 @@ screen and (max-width:640px) {
 
 /* #endregion */
 @media print {
-    .noprint {
-        display: none;
-        height: 0px;
+
+    .hiddenIfDesktop{
+        opacity: 1.0;
     }
 
-    #map{
-        visibility: hidden;
+    .noprint {
+        display: none;
         height: 0px;
     }
 
@@ -304,17 +309,22 @@ screen and (max-width:640px) {
         height: auto;
     }
 
-    #mapimg{
-        /* top: 50%;
-        height: 40%;
-        width: 100%; */
-        /* object-fit: scale-down;
-        line-break: auto; */
+    #map{
+        visibility: hidden;
+        height: 0px;
+    }
+
+    tr.border_bottom td {
+        border-bottom:1pt solid black;
+    }
+    
+    td.border_left {
+        border-left:1pt solid black;
     }
 
     #RouteResultTable{
         width: 100%;
-        font-size: 8px;
+        font-size: 11px;
         padding-top: 0px;
     }
 
@@ -337,11 +347,6 @@ screen and (max-width:640px) {
         height: unset;
         display: unset;
     }
-
-
-    /* #map {
-        height: 100px;
-    } */
 }
 
 /* #region Tab */

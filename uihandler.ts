@@ -6,10 +6,8 @@ import { searchForLocation } from "./requestHandler";
 import { performRoute, tableId } from "./ResultHandler";
 import * as session from './session';
 import { plainCountries } from "./convertcsv";
-import * as bla from 'html2canvas';
 import { Language, getText, Texts, setAppLanguage, language } from "./texts";
 import { globals } from "./globals";
-// import * as html2canvas from "html2canvas";
 
 class StopGroup {
     outerDiv: HTMLDivElement;
@@ -189,11 +187,10 @@ export function initilizeUI() {
     }
 
     if (isIE()) {
-        debugger;
         tabButton2.style.display = "none";
         dropdownNearby.type = "hidden";
         if (getLanguage() == Language.de) {
-            alert("Ihr Internetbrowser wird nicht vollständig unterstzützt. Um alle Features dieser Anwendung nutzen zu können, wechseln sie bitte auf einen aktuellen Browser.");
+            alert("Ihr Internetbrowser wird nicht vollständig unterstzützt. Um alle Features dieser Anwendung nutzen zu können, wechseln Sie bitte auf einen aktuellen Browser.");
         }
         else {
             alert("Your browser is not fully supported. To use all features of this application please use a current browser.")

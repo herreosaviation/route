@@ -116,6 +116,7 @@ export function addStop() {
 
 export function removeStop(index: number) {
     if (index >= currentStops.length) { return }
+    clearStops(index);
     currentStops.splice(index, 1);
 }
 

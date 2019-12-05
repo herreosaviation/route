@@ -105,7 +105,8 @@ define(["require", "exports", "./mapHandler", "./texts", "./timespan"], function
                     cell.colSpan = data[0].length;
                 }
                 else if (index == 1 || index == 3 || index == 5) {
-                    cell.style.borderLeft = "1pt solid white";
+                    // cell.style.borderLeft = "1pt solid white";
+                    cell.className = "border_left";
                     cell.style.paddingLeft = "10px";
                     cell.style.paddingRight = "10px";
                 }
@@ -118,4 +119,3 @@ define(["require", "exports", "./mapHandler", "./texts", "./timespan"], function
         return mapHandler.getDistanceFromLatLonInKm(start.lat(), start.lng(), end.lat(), end.lng());
     }
 });
-//# sourceMappingURL=ResultHandler.js.map

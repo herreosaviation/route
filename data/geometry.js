@@ -174,4 +174,3 @@ define(["require", "exports"], function (require, exports) {
         ], false),
     };
 });
-//# sourceMappingURL=geometry.js.map

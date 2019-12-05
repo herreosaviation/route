@@ -177,4 +177,3 @@ define(["require", "exports"], function (require, exports) {
     }());
     exports.TimeSpan = TimeSpan;
 });
-//# sourceMappingURL=timespan.js.map

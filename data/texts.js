@@ -160,4 +160,3 @@ define(["require", "exports"], function (require, exports) {
     }
     exports.getText = getText;
 });
-//# sourceMappingURL=texts.js.map

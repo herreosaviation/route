@@ -1,7 +1,6 @@
 define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights", "./mapHandler", "./requestHandler", "./ResultHandler", "./session", "./convertcsv", "./texts", "./globals"], function (require, exports, ActiveRouteSelection_1, copter_1, flights_1, mapHandler, requestHandler_1, ResultHandler_1, session, convertcsv_1, texts_1, globals_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    // import * as html2canvas from "html2canvas";
     var StopGroup = /** @class */ (function () {
         function StopGroup() {
         }
@@ -150,11 +149,10 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
             session.setCurrentCopter(copter_1.copters[0]);
         }
         if (isIE()) {
-            debugger;
             tabButton2.style.display = "none";
             dropdownNearby.type = "hidden";
             if (getLanguage() == texts_1.Language.de) {
-                alert("Ihr Internetbrowser wird nicht vollständig unterstzützt. Um alle Features dieser Anwendung nutzen zu können, wechseln sie bitte auf einen aktuellen Browser.");
+                alert("Ihr Internetbrowser wird nicht vollständig unterstzützt. Um alle Features dieser Anwendung nutzen zu können, wechseln Sie bitte auf einen aktuellen Browser.");
             }
             else {
                 alert("Your browser is not fully supported. To use all features of this application please use a current browser.");
@@ -682,4 +680,3 @@ define(["require", "exports", "./ActiveRouteSelection", "./copter", "./flights",
         return false;
     }
 });
-//# sourceMappingURL=uihandler.js.map

@@ -186,4 +186,3 @@ define(["require", "exports", "./globals", "./flights", "./mapstyle"], function 
         return deg * (Math.PI / 180);
     }
 });
-//# sourceMappingURL=mapHandler.js.map

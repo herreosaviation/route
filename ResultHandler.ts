@@ -136,7 +136,8 @@ function createTable(steps: SingleStep[], numberOfStops: number): HTMLTableEleme
                 cell.colSpan = data[0].length;
             }
             else if (index == 1 || index == 3 || index == 5) {
-                cell.style.borderLeft = "1pt solid white";
+                // cell.style.borderLeft = "1pt solid white";
+                cell.className = "border_left";
                 cell.style.paddingLeft = "10px";
                 cell.style.paddingRight = "10px";
             }

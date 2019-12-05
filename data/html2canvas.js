@@ -1409,4 +1409,3 @@
     } }); }); }, zs = function (A) { return !!A.parentNode && (A.parentNode.removeChild(A), !0); };
     return function (A, e) { return void 0 === e && (e = {}), Vs(A, e); };
 });
-//# sourceMappingURL=html2canvas.js.map

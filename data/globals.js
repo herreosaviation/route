@@ -13,4 +13,3 @@ define(["require", "exports"], function (require, exports) {
     }());
     exports.globals = globals;
 });
-//# sourceMappingURL=globals.js.map

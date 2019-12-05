@@ -100,6 +100,7 @@ define(["require", "exports", "./mapHandler"], function (require, exports, mapHa
         if (index >= exports.currentStops.length) {
             return;
         }
+        clearStops(index);
         exports.currentStops.splice(index, 1);
     }
     exports.removeStop = removeStop;
@@ -120,4 +121,3 @@ define(["require", "exports", "./mapHandler"], function (require, exports, mapHa
     }
     exports.prepareRouteSelector = prepareRouteSelector;
 });
-//# sourceMappingURL=session.js.map
