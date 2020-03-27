@@ -125,6 +125,8 @@ export function initilizeUI() {
                 mailBody += nl;
                 mailBody += x.getLatLng();
             }
+
+            mailBody += nl;
         });
 
         var mailSubject = getText(Texts.mailSubject);

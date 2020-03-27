@@ -323,6 +323,12 @@ screen and (max-width:640px) {
         display: unset;
     }
 
+    html, body {
+        height:100%; 
+        margin: 0 !important; 
+        padding: 0 !important;
+        overflow: hidden;
+      }
 
     /* #map {
         height: 100px;

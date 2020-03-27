@@ -142,13 +142,19 @@ export function getText(type: Texts, index: number = null): string {
         case Texts.mailSubject:
             return isde ? "Anfrage" : "";
         case Texts.mailHeader:
-            return isde ? "Hallo, ich hätte gerne weiter Informationen." : "";
+            return isde ? `Hallo,
+
+ich hätte gerne weitere Informationen.
+` : `Hello,
+
+I'd like to recieve more information.
+`;
         case Texts.mailStart:
-            return isde ? "Start" : "";
+            return isde ? "Start-Ort" : "Place of Departure";
         case Texts.mailStop:
-            return isde ? "Zwischenstopp " + ((index != null && index > 0 ? index : "")) : "";
+            return isde ? "Zwischenstopp " + ((index != null && index > 0 ? index : "")) : "Intermediate Stop " + ((index != null && index > 0 ? index : ""));
         case Texts.mailDestination:
-            return isde ? "Ziel" : "";
+            return isde ? "Ziel" : "Destination";
         case Texts.hhmmend:
             return isde ? "Std." : "Hrs.";
     }

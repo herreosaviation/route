@@ -1,16 +1,16 @@
 {
     "compilerOptions": {
         "module": "amd",
-        // "outFile": "build/main.js",
-        "outDir": "data",
+        // "outFile": "data/all.js",
+        "outDir": "build/",
         // "sourceMap": false,
-        "sourceMap": true,
+        "sourceMap": false,
         "target": "es6",
         "allowJs": true
     },
     "exclude": [
         "node_modules",
-        "data"
+        "build"
     ],
     "include": [
         "./**/*"
