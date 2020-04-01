@@ -1,0 +1,20 @@
+{
+  "name": "herreos_routenplaner",
+  "version": "1.1.0",
+  "description": "Routenplaner für herreos.eu",
+  "main": "require.js",
+  "dependencies": {
+    "html2canvas": "^1.0.0-rc.5",
+    "jslint": "^0.12.1",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.7.3",
+    "webpack-cli": "^3.3.11",
+    "webpack": "^4.42.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jan Herr",
+  "license": "ISC"
+}
