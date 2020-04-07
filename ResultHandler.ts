@@ -57,7 +57,7 @@ export function performRoute(route: RouteObjectWrapper[], copter: Copter, succes
                 success({
                     originalRoute: route,
                     steps: steps,
-                    table: createTable(steps, numberOfCopterStops),
+                    table: createTable(steps, numberOfCopterStops, copter.isPlane),
                     carDirectionResult: result,
                     copterDirections: route.map(x => x.getLatLng()),
                     copterNumberOfStops: numberOfCopterStops
@@ -70,11 +70,12 @@ export function performRoute(route: RouteObjectWrapper[], copter: Copter, succes
     }
 }
 
-function createTable(steps: SingleStep[], numberOfStops: number): HTMLTableElement {
+function createTable(steps: SingleStep[], numberOfStops: number, isPlane: boolean): HTMLTableElement {
     var table = document.createElement('table');
     table.id = tableId;
     var data: String[][] = [];
-    var columnNames = [getText(Texts.tablePlace), getText(Texts.tableFlightroute), getText(Texts.tableFlightTime), getText(Texts.tableCarTime), getText(Texts.tableCarRoute), getText(Texts.tableTimeSaving)];
+
+    var columnNames = [getText(Texts.tablePlace), getText(Texts.tableFlightroute), getText(Texts.tableFlightTime, null, isPlane), getText(Texts.tableCarTime), getText(Texts.tableCarRoute), getText(Texts.tableTimeSaving)];
     data.push(columnNames);
     data.push([])
     if (steps.length >= 1) {

@@ -52,11 +52,11 @@ export function setAppLanguage(lang: Language) {
     language = lang;
 }
 
-export function getText(type: Texts, index: number = null): string {
+export function getText(type: Texts, index: number = null, isplane = false): string {
     var isde = language == Language.de;
     switch (type) {
         case Texts.selectedCopter:
-            return isde ? "Helikopter Typ" : "Helicopter Type";
+            return isde ? "Helikopter/Flugzeug" : "Helicopter/Airplane";
         case Texts.startTitle:
             return isde ? "Start-Ort" : "Place of Departure";
         case Texts.noStart:
@@ -84,7 +84,7 @@ export function getText(type: Texts, index: number = null): string {
         case Texts.tableFlightroute:
             return isde ? "Luftlinie" : "Distance Traveled in Flight";
         case Texts.tableFlightTime:
-            return isde ? "Flugzeit" : "Travel Time by Helicopter";
+            return isde ? "Flugzeit" : ("Travel Time by " + (isplane ? "Airplane" : "Helicopter"));
         case Texts.tableCarRoute:
             return isde ? "Fahrtstrecke" : "Distance Traveled by Car";
         case Texts.tableCarTime:
